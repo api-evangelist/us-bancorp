@@ -1,7 +1,13 @@
 aid: us-bancorp
-url: https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.us-bancorp.com
+description: >-
+  U.S. Bancorp is the parent company of U.S. Bank National Association, one of the
+  largest commercial banks in the United States, providing a wide range of financial
+  services including consumer banking, business banking, payment services, corporate
+  and commercial banking, and wealth management.
