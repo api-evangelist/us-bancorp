@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/json-schema/us-bank-transaction-schema.json",
+  "title": "US Bank Account Transaction",
+  "description": "Schema for a U.S. Bank deposit account transaction from the Corporate Account Information API",
+  "type": "object",
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "description": "Unique transaction identifier assigned by U.S. Bank"
+    },
+    "accountNumber": {
+      "type": "string",
+      "description": "Account number the transaction belongs to"
+    },
+    "amount": {
+      "type": "number",
+      "format": "double",
+      "description": "Transaction amount (positive for credits, negative for debits)"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code",
+      "default": "USD"
+    },
+    "transactionDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the transaction was processed"
+    },
+    "valueDate": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Value date when funds are available/debited"
+    },
+    "description": {
+      "type": ["string", "null"],
+      "description": "Transaction description or memo"
+    },
+    "transactionType": {
+      "type": ["string", "null"],
+      "description": "Transaction type code (e.g., WIRE, ACH, CHECK, RTP)"
+    },
+    "referenceNumber": {
+      "type": ["string", "null"],
+      "description": "Client reference number for the transaction"
+    },
+    "bankReference": {
+      "type": ["string", "null"],
+      "description": "U.S. Bank internal reference number"
+    }
+  },
+  "required": ["transactionId", "accountNumber", "amount", "transactionDate"]
+}

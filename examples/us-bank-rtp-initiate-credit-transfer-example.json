@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.usbank.com/v1/rtp/credit-transfers",
+    "headers": {
+      "Content-Type": "application/json",
+      "Correlation-ID": "550e8400-e29b-41d4-a716-446655440000",
+      "Authorization": "Bearer <OAuth2_token>"
+    },
+    "body": {
+      "payerAccountNumber": "123456789",
+      "payeeAccountNumber": "987654321",
+      "payeeRoutingNumber": "091000022",
+      "payeeName": "Acme Corporation",
+      "amount": 5000.00,
+      "remittanceInfo": "Invoice INV-2025-1234 payment",
+      "endToEndId": "CLIENT-REF-20250615-001"
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "transactionId": "USB-RTP-20250615-78923456",
+      "endToEndId": "CLIENT-REF-20250615-001",
+      "status": "COMPLETED",
+      "amount": 5000.00,
+      "createdAt": "2025-06-15T14:23:45Z",
+      "completedAt": "2025-06-15T14:23:46Z",
+      "statusMessage": "Payment settled successfully"
+    }
+  }
+}

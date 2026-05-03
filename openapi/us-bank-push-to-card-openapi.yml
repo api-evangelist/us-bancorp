@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: US Bank Push to Card API
+  description: >-
+    The Push to Card API enables instant fund disbursements directly to Visa and Mastercard
+    debit cards. Ideal for disbursements, refunds, and payouts up to $125,000 per transaction.
+    Transactions are irrevocable and provide immediate access to funds for recipients.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+servers:
+  - url: https://api.usbank.com/v1
+    description: US Bank production API
+
+security:
+  - OAuth2MFA: []
+
+paths:
+  /push-to-card/payments:
+    post:
+      operationId: initiatePushToCardPayment
+      summary: Initiate Push to Card Payment
+      description: >-
+        Initiate an instant fund disbursement to a Visa or Mastercard debit card.
+        The transaction limit is $125,000 per transaction. All originated Push to Card
+        transactions are irrevocable once submitted.
+      tags:
+        - Push to Card Payments
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json
+        - name: Correlation-ID
+          in: header
+          required: true
+          description: Unique identifier for request/response correlation
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PushToCardRequest'
+      responses:
+        '201':
+          description: Push to Card payment initiated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PushToCardResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Payment cannot be processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /push-to-card/payments/{paymentId}:
+    get:
+      operationId: getPushToCardPaymentStatus
+      summary: Get Push to Card Payment Status
+      description: Retrieve the status and details of a Push to Card payment.
+      tags:
+        - Push to Card Payments
+      parameters:
+        - name: paymentId
+          in: path
+          required: true
+          description: Unique payment identifier
+          schema:
+            type: string
+        - name: Correlation-ID
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Payment status and details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PushToCardResponse'
+        '404':
+          description: Payment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            payment.write: Initiate card payments
+            payment.read: Read payment status
+
+  schemas:
+    PushToCardRequest:
+      type: object
+      description: Request to initiate a Push to Card payment
+      properties:
+        sourceAccountNumber:
+          type: string
+          description: U.S. Bank source account number to debit
+        recipientCardNumber:
+          type: string
+          description: Recipient's Visa or Mastercard debit card number (16 digits)
+        recipientName:
+          type: string
+          description: Name of the recipient cardholder
+        amount:
+          type: number
+          format: double
+          description: Payment amount in USD (max $125,000)
+          maximum: 125000
+          minimum: 0.01
+        currency:
+          type: string
+          description: ISO 4217 currency code
+          default: USD
+        description:
+          type: string
+          description: Payment description or memo (max 140 characters)
+          maxLength: 140
+        clientReferenceId:
+          type: string
+          description: Client-assigned reference identifier
+      required:
+        - sourceAccountNumber
+        - recipientCardNumber
+        - recipientName
+        - amount
+
+    PushToCardResponse:
+      type: object
+      description: Push to Card payment status
+      properties:
+        paymentId:
+          type: string
+          description: U.S. Bank payment identifier
+        clientReferenceId:
+          type: string
+          description: Client-assigned reference ID
+        status:
+          type: string
+          enum: [PENDING, COMPLETED, FAILED, DECLINED]
+          description: Payment status
+        amount:
+          type: number
+          format: double
+          description: Payment amount
+        currency:
+          type: string
+          description: Currency code
+        initiatedAt:
+          type: string
+          format: date-time
+          description: Payment initiation timestamp
+        completedAt:
+          type: string
+          format: date-time
+          description: Payment completion timestamp
+        networkTransactionId:
+          type: string
+          description: Card network transaction ID
+      required:
+        - paymentId
+        - status
+        - amount
+        - initiatedAt
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        correlationId:
+          type: string

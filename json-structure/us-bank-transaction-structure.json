@@ -1,0 +1,67 @@
+{
+  "name": "US Bank Account Transaction",
+  "description": "Structure documentation for U.S. Bank account transactions from the Corporate Account Information API",
+  "fields": [
+    {
+      "name": "transactionId",
+      "type": "string",
+      "required": true,
+      "description": "Unique transaction identifier"
+    },
+    {
+      "name": "accountNumber",
+      "type": "string",
+      "required": true,
+      "description": "Account number"
+    },
+    {
+      "name": "amount",
+      "type": "number (double)",
+      "required": true,
+      "description": "Amount (positive=credit, negative=debit)"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "required": false,
+      "description": "ISO 4217 currency code",
+      "default": "USD"
+    },
+    {
+      "name": "transactionDate",
+      "type": "string (date)",
+      "required": true,
+      "description": "Processing date"
+    },
+    {
+      "name": "valueDate",
+      "type": "string (date, nullable)",
+      "required": false,
+      "description": "Value date for funds availability"
+    },
+    {
+      "name": "description",
+      "type": "string (nullable)",
+      "required": false,
+      "description": "Transaction description or memo"
+    },
+    {
+      "name": "transactionType",
+      "type": "string (nullable)",
+      "required": false,
+      "description": "Type code (WIRE, ACH, CHECK, RTP)"
+    },
+    {
+      "name": "referenceNumber",
+      "type": "string (nullable)",
+      "required": false,
+      "description": "Client reference number"
+    },
+    {
+      "name": "bankReference",
+      "type": "string (nullable)",
+      "required": false,
+      "description": "U.S. Bank internal reference"
+    }
+  ]
+}

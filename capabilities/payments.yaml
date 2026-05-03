@@ -1,0 +1,121 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "US Bank Payments"
+  description: >-
+    Unified payments capability composing US Bank RTP, Push to Card, and Positive Pay APIs.
+    Used by payments teams and corporate finance for real-time payment origination, instant
+    card disbursements, and check fraud prevention.
+  tags:
+    - Banking
+    - Payments
+    - RTP
+    - Push to Card
+    - Fraud Prevention
+    - Finance
+    - Disbursements
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      USB_OAUTH_TOKEN: USB_OAUTH_TOKEN
+
+capability:
+  consumes:
+    - import: usb-rtp
+      location: ./shared/rtp-payments.yaml
+
+  exposes:
+    - type: rest
+      port: 8081
+      namespace: payments-api
+      description: "Unified REST API for US Bank payment operations."
+      resources:
+        - path: /v1/rtp/eligibility
+          name: rtp-eligibility
+          description: "RTP network eligibility check"
+          operations:
+            - method: GET
+              name: check-rtp-eligibility
+              description: "Verify RTP eligibility by routing number"
+              call: "usb-rtp.check-rtp-eligibility"
+              with:
+                routingNumber: "rest.routingNumber"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/rtp/credit-transfers
+          name: rtp-credit-transfers
+          description: "Instant RTP credit transfer payments"
+          operations:
+            - method: POST
+              name: send-rtp-payment
+              description: "Send an instant RTP credit transfer (irrevocable)"
+              call: "usb-rtp.initiate-rtp-credit-transfer"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/rtp/credit-transfers/{transaction-id}
+          name: rtp-credit-transfer-status
+          description: "RTP payment status"
+          operations:
+            - method: GET
+              name: get-rtp-status
+              description: "Get RTP payment status"
+              call: "usb-rtp.get-rtp-credit-transfer-status"
+              with:
+                transactionId: "rest.transaction-id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9091
+      namespace: payments-mcp
+      transport: http
+      description: "MCP server for AI-assisted US Bank payment orchestration."
+      tools:
+        - name: verify-rtp-eligibility
+          description: "Verify if a bank participates in the RTP Network before initiating payment"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "usb-rtp.check-rtp-eligibility"
+          with:
+            routingNumber: "tools.routingNumber"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: send-rtp-credit-transfer
+          description: "Send an instant, irrevocable RTP credit transfer via The Clearing House"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "usb-rtp.initiate-rtp-credit-transfer"
+          with:
+            payerAccountNumber: "tools.payerAccountNumber"
+            payeeAccountNumber: "tools.payeeAccountNumber"
+            payeeRoutingNumber: "tools.payeeRoutingNumber"
+            payeeName: "tools.payeeName"
+            amount: "tools.amount"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: track-rtp-payment
+          description: "Track the status of a sent RTP credit transfer"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "usb-rtp.get-rtp-credit-transfer-status"
+          with:
+            transactionId: "tools.transactionId"
+          outputParameters:
+            - type: object
+              mapping: "$."

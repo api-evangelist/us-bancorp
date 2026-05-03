@@ -1,0 +1,66 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dct": "http://purl.org/dc/terms/",
+    "usb": "https://www.usbank.com/vocab/",
+
+    "BankAccount": "usb:BankAccount",
+    "DepositAccount": "usb:DepositAccount",
+    "Transaction": "usb:Transaction",
+    "Payment": "PayAction",
+    "Organization": "Organization",
+    "FinancialProduct": "FinancialProduct",
+
+    "accountNumber": "usb:accountNumber",
+    "accountType": "usb:accountType",
+    "accountName": "name",
+    "currency": "usb:currency",
+    "status": "actionStatus",
+
+    "transactionId": "usb:transactionId",
+    "amount": "price",
+    "transactionDate": {
+      "@id": "usb:transactionDate",
+      "@type": "xsd:date"
+    },
+    "valueDate": {
+      "@id": "usb:valueDate",
+      "@type": "xsd:date"
+    },
+    "description": "description",
+    "transactionType": "usb:transactionType",
+    "referenceNumber": "usb:referenceNumber",
+    "bankReference": "usb:bankReference",
+
+    "availableBalance": "usb:availableBalance",
+    "ledgerBalance": "usb:ledgerBalance",
+    "collectedBalance": "usb:collectedBalance",
+    "balanceDate": {
+      "@id": "usb:balanceDate",
+      "@type": "xsd:date"
+    },
+
+    "routingNumber": "usb:routingNumber",
+    "payerAccountNumber": "usb:payerAccountNumber",
+    "payeeAccountNumber": "usb:payeeAccountNumber",
+    "payeeName": "usb:payeeName",
+    "remittanceInfo": "usb:remittanceInfo",
+
+    "RTPPayment": "usb:RTPPayment",
+    "ACHPayment": "usb:ACHPayment",
+    "WireTransfer": "usb:WireTransfer",
+    "PushToCardPayment": "usb:PushToCardPayment",
+    "PositivePayException": "usb:PositivePayException",
+
+    "USBancorp": {
+      "@id": "usb:USBancorp",
+      "@type": "Organization"
+    },
+    "USBank": {
+      "@id": "usb:USBank",
+      "@type": "Organization"
+    }
+  }
+}

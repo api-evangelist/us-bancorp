@@ -1,0 +1,149 @@
+name: US Bancorp Vocabulary
+description: >-
+  Vocabulary and taxonomy for US Bancorp (U.S. Bank), covering banking products, payment
+  types, API concepts, and financial services terminology used in U.S. Bank developer portal
+  APIs and treasury management services.
+url: https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/vocabulary/us-bancorp-vocabulary.yml
+created: '2026-05-03'
+modified: '2026-05-03'
+
+categories:
+  - name: Corporate Banking Products
+    description: U.S. Bank corporate banking API products
+    terms:
+      - term: Corporate Account Information
+        definition: >-
+          A U.S. Bank API product providing programmatic access to deposit account balances
+          and transaction data for corporate customers, available via developer.usbank.com.
+      - term: Treasury Builder
+        definition: >-
+          A U.S. Bank bundled API product suite that packages ACH Originations, Instant Payments,
+          Check Payables, Positive Pay, Corporate Account Information, and Account Transfers.
+      - term: Positive Pay
+        definition: >-
+          A check fraud prevention service that electronically matches checks presented for
+          payment against items the customer issued, flagging exceptions for review.
+      - term: Push to Card
+        definition: >-
+          A payment service enabling instant fund disbursements directly to Visa or Mastercard
+          debit cards, with a $125,000 per-transaction limit.
+      - term: Data Toolbox
+        definition: >-
+          A U.S. Bank API enabling access to retail banking consumer account data including
+          checking, savings, credit card, mortgage, and brokerage accounts.
+      - term: Voyager
+        definition: >-
+          U.S. Bank's fleet card and payment network for commercial vehicle fleets, offering
+          APIs for transaction data, vehicle management, and account reporting.
+      - term: Freight Payment
+        definition: >-
+          U.S. Bank's freight audit and payment processing service for transportation companies,
+          providing APIs for transaction submission and user management.
+
+  - name: Payment Types
+    description: Payment methods and rails supported by U.S. Bank APIs
+    terms:
+      - term: Real-Time Payments
+        abbreviation: RTP
+        definition: >-
+          24/7/365 instant payment infrastructure operated by The Clearing House (TCH), enabling
+          immediate settlement of credit transfers and request-for-payment messages.
+      - term: ACH
+        expansion: Automated Clearing House
+        definition: >-
+          The US electronic funds transfer system processing credit and debit transfers in batches,
+          typically settling in 1-3 business days.
+      - term: Wire Transfer
+        definition: >-
+          Electronic transfer of funds between financial institutions for same-day settlement of
+          high-value payments via Fedwire or CHIPS.
+      - term: Request for Payment
+        abbreviation: RFP
+        definition: >-
+          An RTP message sent to request payment from a debtor, supporting partial payments,
+          future-dated requests, and configurable reminders.
+      - term: Credit Transfer Message
+        definition: >-
+          An RTP payment message sending funds from payer to payee, settling instantly and
+          irrevocably through The Clearing House network.
+      - term: FedNow
+        definition: >-
+          The Federal Reserve's instant payment service launched in 2023, enabling real-time
+          settlement of payments 24/7/365 across US financial institutions.
+
+  - name: Account Management
+    description: Account and balance terminology
+    terms:
+      - term: Available Balance
+        definition: >-
+          The amount of funds in an account that are immediately available for withdrawal
+          or payment, excluding holds and uncollected funds.
+      - term: Ledger Balance
+        definition: >-
+          The book balance of an account showing all posted transactions as of a given date,
+          including items not yet collected (float).
+      - term: Collected Balance
+        definition: >-
+          The balance in an account net of float — funds that have been received and are
+          considered collected for banking purposes.
+      - term: Previous Day Balance
+        definition: >-
+          Account balance information as of the close of the prior business day, used for
+          next-day reporting and cash positioning.
+      - term: Current Day Balance
+        definition: >-
+          Intraday account balance reflecting transactions posted during the current business day.
+
+  - name: Fraud Prevention
+    description: Check and payment fraud prevention terminology
+    terms:
+      - term: Positive Pay Exception
+        definition: >-
+          A check that does not match the customer's issued item file and requires a pay or
+          return decision from the account holder by the decision deadline.
+      - term: Decision Deadline
+        definition: >-
+          The 3:00 PM local processing time cutoff for submitting pay or return decisions
+          on Positive Pay exception items.
+      - term: Stale Check
+        definition: >-
+          A check presented for payment beyond its acceptable processing date, flagged as an
+          exception by the Positive Pay system.
+
+  - name: Authentication and Security
+    description: API authentication and security concepts
+    terms:
+      - term: OAuth MFA
+        expansion: OAuth Multi-Factor Authentication
+        definition: >-
+          The authentication method required for U.S. Bank APIs, combining OAuth 2.0 tokens
+          with multi-factor authentication using SinglePoint credentials.
+      - term: SinglePoint
+        definition: >-
+          U.S. Bank's treasury management online banking platform, providing credentials
+          used for API authentication through the OAuth MFA flow.
+      - term: Correlation ID
+        definition: >-
+          A unique identifier (UUID) required in the header of every U.S. Bank API request
+          to correlate requests with responses for tracing and troubleshooting.
+      - term: API Onboarding
+        definition: >-
+          The process of registering for U.S. Bank API access, including creating a developer
+          account, completing the Portal Access Form, and receiving API credentials.
+
+  - name: Industry Context
+    description: Financial industry context terms
+    terms:
+      - term: The Clearing House
+        abbreviation: TCH
+        definition: >-
+          A private sector payments company owned by large US commercial banks that operates the
+          RTP real-time payments network and CHIPS wire transfer system.
+      - term: SinglePoint Administration
+        definition: >-
+          The U.S. Bank treasury management platform through which corporate customers manage
+          account permissions and user access for API-integrated services.
+      - term: Fortune 500
+        definition: >-
+          U.S. Bancorp is included in the Fortune 500 list of largest US companies by revenue,
+          as the parent of U.S. Bank National Association.

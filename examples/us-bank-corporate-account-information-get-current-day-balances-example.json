@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.usbank.com/v1/accounts/current-day-balances",
+    "headers": {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Correlation-ID": "550e8400-e29b-41d4-a716-446655440001",
+      "Authorization": "Bearer <OAuth2_token>"
+    },
+    "body": {
+      "accountNumbers": ["123456789", "987654321", "456789123"]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "balances": [
+        {
+          "accountNumber": "1234XXXXX",
+          "availableBalance": 125430.50,
+          "ledgerBalance": 127890.00,
+          "collectedBalance": 125430.50,
+          "currency": "USD",
+          "balanceDate": "2025-06-15"
+        },
+        {
+          "accountNumber": "9876XXXXX",
+          "availableBalance": 45230.75,
+          "ledgerBalance": 45230.75,
+          "collectedBalance": 45230.75,
+          "currency": "USD",
+          "balanceDate": "2025-06-15"
+        },
+        {
+          "accountNumber": "4567XXXXX",
+          "availableBalance": 892100.00,
+          "ledgerBalance": 895000.00,
+          "collectedBalance": 892100.00,
+          "currency": "USD",
+          "balanceDate": "2025-06-15"
+        }
+      ]
+    }
+  }
+}

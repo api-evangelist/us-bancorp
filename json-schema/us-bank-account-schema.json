@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/json-schema/us-bank-account-schema.json",
+  "title": "US Bank Deposit Account",
+  "description": "Schema for a U.S. Bank deposit account as returned by the Corporate Account Information API",
+  "type": "object",
+  "properties": {
+    "accountNumber": {
+      "type": "string",
+      "description": "Account number (masked for security)"
+    },
+    "accountType": {
+      "type": "string",
+      "enum": ["CHECKING", "SAVINGS", "MONEY_MARKET", "CD"],
+      "description": "Type of deposit account"
+    },
+    "accountName": {
+      "type": ["string", "null"],
+      "description": "Account nickname or name"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217 currency code",
+      "default": "USD",
+      "example": "USD"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "CLOSED", "FROZEN"],
+      "description": "Account status"
+    }
+  },
+  "required": ["accountNumber", "accountType", "status"]
+}

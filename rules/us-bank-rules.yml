@@ -1,0 +1,74 @@
+extends: spectral:oas
+rules:
+  usbank-operations-have-tags:
+    description: All US Bank API operations must have at least one tag for grouping
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: truthy
+
+  usbank-correlation-id-required:
+    description: All US Bank API operations must accept a Correlation-ID header for tracing
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].parameters[?(@.name == 'Correlation-ID')]"
+    then:
+      field: required
+      function: truthy
+
+  usbank-https-servers:
+    description: All US Bank API servers must use HTTPS
+    severity: error
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  usbank-operations-have-operation-ids:
+    description: All operations must have operationId for SDK generation
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  usbank-operation-ids-camel-case:
+    description: US Bank operation IDs should use camelCase
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  usbank-responses-have-content:
+    description: All 200/201 responses should define content schema
+    severity: warn
+    given: "$.paths[*][*].responses[?(@property == '200' || @property == '201')]"
+    then:
+      field: content
+      function: truthy
+
+  usbank-error-responses-defined:
+    description: All POST/PUT/PATCH operations should define 400 error responses
+    severity: warn
+    given: "$.paths[*][post,put,patch]"
+    then:
+      field: responses.400
+      function: truthy
+
+  usbank-security-defined:
+    description: US Bank API operations should have security defined (OAuth MFA)
+    severity: error
+    given: "$.security"
+    then:
+      function: truthy
+
+  usbank-parameters-have-descriptions:
+    description: All parameters should include descriptions
+    severity: warn
+    given: "$.paths[*][*].parameters[*]"
+    then:
+      field: description
+      function: truthy

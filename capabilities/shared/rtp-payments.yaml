@@ -1,0 +1,183 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "US Bank RTP Real-Time Payments"
+  description: "US Bank RTP API for 24/7/365 real-time payment origination via The Clearing House RTP network."
+  tags:
+    - Payments
+    - Real-Time Payments
+    - RTP
+    - Banking
+    - Treasury Management
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      USB_OAUTH_TOKEN: USB_OAUTH_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: usb-rtp
+      baseUri: https://api.usbank.com/v1
+      description: "US Bank RTP Real-Time Payments API"
+      authentication:
+        type: bearer
+        token: "{{USB_OAUTH_TOKEN}}"
+      resources:
+        - name: rtp-eligibility
+          path: /rtp/eligibility
+          description: "Check if a bank supports RTP"
+          operations:
+            - name: check-rtp-eligibility
+              method: GET
+              description: "Check if a receiving bank is part of the RTP Network"
+              inputParameters:
+                - name: routingNumber
+                  in: query
+                  type: string
+                  required: true
+                  description: "9-digit routing number of receiving bank"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: rtp-credit-transfers
+          path: /rtp/credit-transfers
+          description: "RTP credit transfer payments"
+          operations:
+            - name: initiate-rtp-credit-transfer
+              method: POST
+              description: "Initiate an RTP credit transfer (instant, irrevocable)"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  payerAccountNumber: "{{tools.payerAccountNumber}}"
+                  payeeAccountNumber: "{{tools.payeeAccountNumber}}"
+                  payeeRoutingNumber: "{{tools.payeeRoutingNumber}}"
+                  payeeName: "{{tools.payeeName}}"
+                  amount: "{{tools.amount}}"
+                  remittanceInfo: "{{tools.remittanceInfo}}"
+
+            - name: get-rtp-credit-transfer-status
+              method: GET
+              description: "Get status of an RTP credit transfer"
+              inputParameters:
+                - name: transactionId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Transaction identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+        - name: rtp-requests-for-payment
+          path: /rtp/requests-for-payment
+          description: "RTP Request for Payment (RFP)"
+          operations:
+            - name: initiate-rtp-rfp
+              method: POST
+              description: "Initiate an RTP Request for Payment to receive funds"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  creditorAccountNumber: "{{tools.creditorAccountNumber}}"
+                  debtorName: "{{tools.debtorName}}"
+                  amount: "{{tools.amount}}"
+                  dueDate: "{{tools.dueDate}}"
+
+            - name: get-rtp-rfp-status
+              method: GET
+              description: "Get status of an RTP Request for Payment"
+              inputParameters:
+                - name: requestId
+                  in: path
+                  type: string
+                  required: true
+                  description: "RFP request identifier"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: usb-rtp-rest
+      resources:
+        - path: /v1/rtp/eligibility
+          name: rtp-eligibility
+          operations:
+            - method: GET
+              name: check-rtp-eligibility
+              description: "Check RTP eligibility for a routing number"
+              call: "usb-rtp.check-rtp-eligibility"
+              with:
+                routingNumber: "rest.routingNumber"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: usb-rtp-mcp
+      transport: http
+      tools:
+        - name: check-rtp-eligibility
+          description: "Check if a bank is part of the RTP Network by routing number"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "usb-rtp.check-rtp-eligibility"
+          with:
+            routingNumber: "tools.routingNumber"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: send-rtp-payment
+          description: "Send an instant RTP credit transfer payment (irrevocable)"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "usb-rtp.initiate-rtp-credit-transfer"
+          with:
+            payerAccountNumber: "tools.payerAccountNumber"
+            payeeAccountNumber: "tools.payeeAccountNumber"
+            payeeRoutingNumber: "tools.payeeRoutingNumber"
+            payeeName: "tools.payeeName"
+            amount: "tools.amount"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: get-rtp-payment-status
+          description: "Get the status of an RTP credit transfer"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "usb-rtp.get-rtp-credit-transfer-status"
+          with:
+            transactionId: "tools.transactionId"
+          outputParameters:
+            - type: object
+              mapping: "$."
