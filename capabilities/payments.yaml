@@ -1,121 +1,202 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "US Bank Payments"
-  description: >-
-    Unified payments capability composing US Bank RTP, Push to Card, and Positive Pay APIs.
-    Used by payments teams and corporate finance for real-time payment origination, instant
-    card disbursements, and check fraud prevention.
+  label: US Bank Payments
+  description: Unified payments capability composing US Bank RTP, Push to Card, and Positive Pay APIs. Used by payments teams
+    and corporate finance for real-time payment origination, instant card disbursements, and check fraud prevention.
   tags:
-    - Banking
-    - Payments
-    - RTP
-    - Push to Card
-    - Fraud Prevention
-    - Finance
-    - Disbursements
-  created: "2026-05-03"
-  modified: "2026-05-03"
-
+  - Banking
+  - Payments
+  - RTP
+  - Push to Card
+  - Fraud Prevention
+  - Finance
+  - Disbursements
+  created: '2026-05-03'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      USB_OAUTH_TOKEN: USB_OAUTH_TOKEN
-
+- namespace: env
+  keys:
+    USB_OAUTH_TOKEN: USB_OAUTH_TOKEN
 capability:
   consumes:
-    - import: usb-rtp
-      location: ./shared/rtp-payments.yaml
-
+  - type: http
+    namespace: usb-rtp
+    baseUri: https://api.usbank.com/v1
+    description: US Bank RTP Real-Time Payments API
+    authentication:
+      type: bearer
+      token: '{{USB_OAUTH_TOKEN}}'
+    resources:
+    - name: rtp-eligibility
+      path: /rtp/eligibility
+      description: Check if a bank supports RTP
+      operations:
+      - name: check-rtp-eligibility
+        method: GET
+        description: Check if a receiving bank is part of the RTP Network
+        inputParameters:
+        - name: routingNumber
+          in: query
+          type: string
+          required: true
+          description: 9-digit routing number of receiving bank
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: rtp-credit-transfers
+      path: /rtp/credit-transfers
+      description: RTP credit transfer payments
+      operations:
+      - name: initiate-rtp-credit-transfer
+        method: POST
+        description: Initiate an RTP credit transfer (instant, irrevocable)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            payerAccountNumber: '{{tools.payerAccountNumber}}'
+            payeeAccountNumber: '{{tools.payeeAccountNumber}}'
+            payeeRoutingNumber: '{{tools.payeeRoutingNumber}}'
+            payeeName: '{{tools.payeeName}}'
+            amount: '{{tools.amount}}'
+            remittanceInfo: '{{tools.remittanceInfo}}'
+      - name: get-rtp-credit-transfer-status
+        method: GET
+        description: Get status of an RTP credit transfer
+        inputParameters:
+        - name: transactionId
+          in: path
+          type: string
+          required: true
+          description: Transaction identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: rtp-requests-for-payment
+      path: /rtp/requests-for-payment
+      description: RTP Request for Payment (RFP)
+      operations:
+      - name: initiate-rtp-rfp
+        method: POST
+        description: Initiate an RTP Request for Payment to receive funds
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            creditorAccountNumber: '{{tools.creditorAccountNumber}}'
+            debtorName: '{{tools.debtorName}}'
+            amount: '{{tools.amount}}'
+            dueDate: '{{tools.dueDate}}'
+      - name: get-rtp-rfp-status
+        method: GET
+        description: Get status of an RTP Request for Payment
+        inputParameters:
+        - name: requestId
+          in: path
+          type: string
+          required: true
+          description: RFP request identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8081
-      namespace: payments-api
-      description: "Unified REST API for US Bank payment operations."
-      resources:
-        - path: /v1/rtp/eligibility
-          name: rtp-eligibility
-          description: "RTP network eligibility check"
-          operations:
-            - method: GET
-              name: check-rtp-eligibility
-              description: "Verify RTP eligibility by routing number"
-              call: "usb-rtp.check-rtp-eligibility"
-              with:
-                routingNumber: "rest.routingNumber"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/rtp/credit-transfers
-          name: rtp-credit-transfers
-          description: "Instant RTP credit transfer payments"
-          operations:
-            - method: POST
-              name: send-rtp-payment
-              description: "Send an instant RTP credit transfer (irrevocable)"
-              call: "usb-rtp.initiate-rtp-credit-transfer"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/rtp/credit-transfers/{transaction-id}
-          name: rtp-credit-transfer-status
-          description: "RTP payment status"
-          operations:
-            - method: GET
-              name: get-rtp-status
-              description: "Get RTP payment status"
-              call: "usb-rtp.get-rtp-credit-transfer-status"
-              with:
-                transactionId: "rest.transaction-id"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9091
-      namespace: payments-mcp
-      transport: http
-      description: "MCP server for AI-assisted US Bank payment orchestration."
-      tools:
-        - name: verify-rtp-eligibility
-          description: "Verify if a bank participates in the RTP Network before initiating payment"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "usb-rtp.check-rtp-eligibility"
-          with:
-            routingNumber: "tools.routingNumber"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: send-rtp-credit-transfer
-          description: "Send an instant, irrevocable RTP credit transfer via The Clearing House"
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "usb-rtp.initiate-rtp-credit-transfer"
-          with:
-            payerAccountNumber: "tools.payerAccountNumber"
-            payeeAccountNumber: "tools.payeeAccountNumber"
-            payeeRoutingNumber: "tools.payeeRoutingNumber"
-            payeeName: "tools.payeeName"
-            amount: "tools.amount"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: track-rtp-payment
-          description: "Track the status of a sent RTP credit transfer"
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "usb-rtp.get-rtp-credit-transfer-status"
-          with:
-            transactionId: "tools.transactionId"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8081
+    namespace: payments-api
+    description: Unified REST API for US Bank payment operations.
+    resources:
+    - path: /v1/rtp/eligibility
+      name: rtp-eligibility
+      description: RTP network eligibility check
+      operations:
+      - method: GET
+        name: check-rtp-eligibility
+        description: Verify RTP eligibility by routing number
+        call: usb-rtp.check-rtp-eligibility
+        with:
+          routingNumber: rest.routingNumber
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/rtp/credit-transfers
+      name: rtp-credit-transfers
+      description: Instant RTP credit transfer payments
+      operations:
+      - method: POST
+        name: send-rtp-payment
+        description: Send an instant RTP credit transfer (irrevocable)
+        call: usb-rtp.initiate-rtp-credit-transfer
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/rtp/credit-transfers/{transaction-id}
+      name: rtp-credit-transfer-status
+      description: RTP payment status
+      operations:
+      - method: GET
+        name: get-rtp-status
+        description: Get RTP payment status
+        call: usb-rtp.get-rtp-credit-transfer-status
+        with:
+          transactionId: rest.transaction-id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9091
+    namespace: payments-mcp
+    transport: http
+    description: MCP server for AI-assisted US Bank payment orchestration.
+    tools:
+    - name: verify-rtp-eligibility
+      description: Verify if a bank participates in the RTP Network before initiating payment
+      hints:
+        readOnly: true
+        openWorld: true
+      call: usb-rtp.check-rtp-eligibility
+      with:
+        routingNumber: tools.routingNumber
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: send-rtp-credit-transfer
+      description: Send an instant, irrevocable RTP credit transfer via The Clearing House
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: usb-rtp.initiate-rtp-credit-transfer
+      with:
+        payerAccountNumber: tools.payerAccountNumber
+        payeeAccountNumber: tools.payeeAccountNumber
+        payeeRoutingNumber: tools.payeeRoutingNumber
+        payeeName: tools.payeeName
+        amount: tools.amount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: track-rtp-payment
+      description: Track the status of a sent RTP credit transfer
+      hints:
+        readOnly: true
+        openWorld: false
+      call: usb-rtp.get-rtp-credit-transfer-status
+      with:
+        transactionId: tools.transactionId
+      outputParameters:
+      - type: object
+        mapping: $.
