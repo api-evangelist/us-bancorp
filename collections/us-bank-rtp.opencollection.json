@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "US Bank RTP Real-Time Payments API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.usbank.com/oauth/authorize",
+      "accessTokenUrl": "https://api.usbank.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RTP Eligibility",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check RTP Eligibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/rtp/eligibility",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              },
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "On-Behalf-Of",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "routingNumber",
+                "value": "",
+                "type": "query",
+                "description": "9-digit routing number of the receiver's bank"
+              }
+            ]
+          },
+          "docs": "Check if the recipient's bank is part of the RTP Network. The routing number of the receiving bank is required to check RTP eligibility."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Credit Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initiate RTP Credit Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.usbank.com/v1/rtp/credit-transfers",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate an RTP credit transfer transaction. The payer must be a U.S. Bank customer. Transactions are processed 24/7/365 and settle instantly. All transactions are irrevocable once submitted."
+        },
+        {
+          "info": {
+            "name": "Get RTP Credit Transfer Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/rtp/credit-transfers/:transactionId",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the RTP credit transfer transaction"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and details of an RTP credit transfer that was initiated or an incoming credit transfer."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Request for Payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initiate RTP Request for Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.usbank.com/v1/rtp/requests-for-payment",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate an RTP Request for Payment (RFP) to receive money in a U.S. Bank account. Supports configurable reminders, partial payments, and future payment scheduling."
+        },
+        {
+          "info": {
+            "name": "Get RTP Request for Payment Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/rtp/requests-for-payment/:requestId",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the RFP"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and details of an RTP Request for Payment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

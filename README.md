@@ -1,202 +1,346 @@
-# US Bancorp
+# US Bancorp (us-bancorp)
 
-U.S. Bancorp is the parent company of U.S. Bank National Association, one of the largest commercial banks in the United States and a Fortune 500 company. U.S. Bank provides a developer portal at developer.usbank.com offering APIs for corporate banking, payments, and treasury management including RTP real-time payments, ACH originations, Positive Pay check fraud prevention, Push to Card disbursements, corporate account information, data toolbox, Voyager fleet management, and freight payment.
+U.S. Bancorp is the parent company of U.S. Bank National Association, one of the largest commercial banks in the United States. U.S. Bank provides a developer portal at developer.usbank.com offering APIs for corporate banking, payments, and treasury management including RTP, ACH, Positive Pay, corporate account information, data toolbox, fleet management (Voyager), freight payment, and push-to-card capabilities. Authentication uses OAuth MFA with SinglePoint credentials.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Contract
 - **Position:** Consuming
 - **Access:** 3rd-Party
 
 ## Tags
 
-- Banking, Finance, Fortune 500, Corporate Banking, Payments, Open Banking, Treasury Management, Consumer Banking
+- Banking
+- Finance
+- Fortune 500
+- Corporate Banking
+- Payments
+- Open Banking
+- Treasury Management
+- Consumer Banking
 
 ## Timestamps
 
 - **Created:** 2024-11-21
-- **Modified:** 2026-05-03
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### US Bank Corporate Account Information API
 
-Programmatic access to deposit account balances and transaction data for corporate customers.
+The Corporate Account Information API provides access to U.S. Bank deposit account balances and transaction data for corporate customers. It enables retrieval of current-day and previous-day account balances (available, ledger, and collected), transaction history up to 60 days (with optional 12 or 24-month retention), and deposit account statements. Authentication uses OAuth MFA with SinglePoint credentials.
 
-**Human URL:** [https://developer.usbank.com/solution-areas/treasury-management-apis](https://developer.usbank.com/solution-areas/treasury-management-apis)
+- **Human URL:** [https://developer.usbank.com/solution-areas/treasury-management-apis](https://developer.usbank.com/solution-areas/treasury-management-apis)
+- **Base URL:** `https://api.usbank.com`
 
 #### Tags
 
-- Banking, Corporate Banking, Account Information, Treasury Management, Finance, Fortune 500
+- Banking
+- Corporate Banking
+- Account Information
+- Treasury Management
+- Finance
+- Fortune 500
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/solution-areas/treasury-management-apis)
 - [Developer Portal](https://developer.usbank.com/)
-- [OpenAPI](openapi/us-bank-corporate-account-information-openapi.yml)
-- [JSON Schema (Account)](json-schema/us-bank-account-schema.json)
-- [JSON Schema (Transaction)](json-schema/us-bank-transaction-schema.json)
-- [JSON-LD Context](json-ld/us-bancorp-context.jsonld)
+- [Getting Started](https://developer.usbank.com/getting-started-with-our-apis)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/openapi/us-bank-corporate-account-information-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/json-schema/us-bank-account-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/json-schema/us-bank-transaction-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/json-ld/us-bancorp-context.jsonld)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank RTP Real-Time Payments API
 
-24/7/365 instant payment origination via The Clearing House RTP network.
+The RTP Real-Time Payments API enables 24/7/365 real-time payment origination through The Clearing House RTP network. Supports credit transfer messages, request for payment (RFP), and RTP eligibility verification. Transactions settle instantly and are irrevocable once sent.
 
-**Human URL:** [https://developer.usbank.com/solution-areas/corporate-payment-apis](https://developer.usbank.com/solution-areas/corporate-payment-apis)
+- **Human URL:** [https://developer.usbank.com/solution-areas/corporate-payment-apis](https://developer.usbank.com/solution-areas/corporate-payment-apis)
 
 #### Tags
 
-- Payments, Real-Time Payments, RTP, Banking, Treasury Management, Finance
+- Payments
+- Real-Time Payments
+- RTP
+- Banking
+- Treasury Management
+- Finance
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/solution-areas/corporate-payment-apis)
-- [OpenAPI](openapi/us-bank-rtp-openapi.yml)
-- [Treasury Management Capability](capabilities/treasury-management.yaml)
-- [Payments Capability](capabilities/payments.yaml)
-- [Spectral Rules](rules/us-bank-rules.yml)
+- [Credit Transfer Docs](https://developer.usbank.com/products/rtp-credit-transfer-message/v1)
+- [Product Suite](https://developer.usbank.com/product-suites/rtp-api-product-suite)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/openapi/us-bank-rtp-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Spectral Ruleset](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/rules/us-bank-rules.yml)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank ACH Originations API
 
-ACH payment origination for payroll, vendor payments, and customer collections.
+The ACH Originations API enables origination of ACH (Automated Clearing House) payments from U.S. Bank corporate accounts. Supports standard ACH credit and debit transactions for payroll, vendor payments, and customer collections.
 
-**Human URL:** [https://developer.usbank.com/products/ach-originations/v1](https://developer.usbank.com/products/ach-originations/v1)
+- **Human URL:** [https://developer.usbank.com/products/ach-originations/v1](https://developer.usbank.com/products/ach-originations/v1)
+
+#### Tags
+
+- Payments
+- ACH
+- Banking
+- Corporate Payments
+- Finance
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/products/ach-originations/v1)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/openapi/us-bank-ach-originations-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank Positive Pay API
 
-Check fraud detection by matching presented checks against issued items.
+The Positive Pay API helps detect check fraud by electronically matching checks to issued items. Enables retrieval of exception items (checks that don't match issued items), submission of pay/return decisions, and access to exception history. Exceptions are available 9am-3pm local processing time.
 
-**Human URL:** [https://developer.usbank.com/products/positive-pay/v1](https://developer.usbank.com/products/positive-pay/v1)
+- **Human URL:** [https://developer.usbank.com/products/positive-pay/v1](https://developer.usbank.com/products/positive-pay/v1)
+
+#### Tags
+
+- Payments
+- Fraud Prevention
+- Check Management
+- Treasury Management
+- Banking
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/products/positive-pay/v1)
-- [OpenAPI](openapi/us-bank-positive-pay-openapi.yml)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/openapi/us-bank-positive-pay-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank Push to Card API
 
-Instant disbursements to Visa and Mastercard debit cards up to $125,000.
+The Push to Card API enables instant fund disbursements directly to Visa and Mastercard debit cards. Ideal for disbursements, refunds, and payouts up to $125,000 per transaction. Transactions are irrevocable once sent and provide immediate fund access to recipients.
 
-**Human URL:** [https://developer.usbank.com/products/push-to-card/v1](https://developer.usbank.com/products/push-to-card/v1)
+- **Human URL:** [https://developer.usbank.com/products/push-to-card/v1](https://developer.usbank.com/products/push-to-card/v1)
+
+#### Tags
+
+- Payments
+- Disbursements
+- Debit Card
+- Banking
+- Finance
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/products/push-to-card/v1)
-- [OpenAPI](openapi/us-bank-push-to-card-openapi.yml)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/us-bancorp/refs/heads/main/openapi/us-bank-push-to-card-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank Wire Transfers API
 
-Domestic and international wire transfer origination.
+The Wire Transfers API enables domestic and international wire transfer origination from U.S. Bank corporate accounts for large-value, time-sensitive payments.
 
-**Human URL:** [https://developer.usbank.com/products/wire-transfers/v1](https://developer.usbank.com/products/wire-transfers/v1)
+- **Human URL:** [https://developer.usbank.com/products/wire-transfers/v1](https://developer.usbank.com/products/wire-transfers/v1)
+
+#### Tags
+
+- Payments
+- Wire Transfers
+- Banking
+- Treasury Management
+- Finance
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/products/wire-transfers/v1)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank Data Toolbox API
 
-Retail banking consumer account data for embedded banking experiences.
+The Data Toolbox API provides access to U.S. Bank retail banking consumer account data including checking, savings, credit card, mortgage, and brokerage account information. Used to build personalized financial management experiences and enable embedded banking.
 
-**Human URL:** [https://developer.usbank.com/products/data-toolbox/v1](https://developer.usbank.com/products/data-toolbox/v1)
+- **Human URL:** [https://developer.usbank.com/products/data-toolbox/v1](https://developer.usbank.com/products/data-toolbox/v1)
+
+#### Tags
+
+- Banking
+- Account Data
+- Retail Banking
+- Finance
+- Open Banking
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/products/data-toolbox/v1)
 - [Accounts Docs](https://developer.usbank.com/products/data-toolbox-accounts/v1)
+- [Retail Banking A P Is](https://developer.usbank.com/solution-areas/retail-banking-apis)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank Voyager Fleet API
 
-Fleet management APIs for Voyager network transactions, vehicles, and accounts.
+The Voyager Fleet API suite provides fleet management capabilities for the Voyager network, enabling access to fleet transaction data, vehicle management, account information, and reporting for corporate fleet card customers.
 
-**Human URL:** [https://developer.usbank.com/product-suites/voyager-api-product-suite](https://developer.usbank.com/product-suites/voyager-api-product-suite)
+- **Human URL:** [https://developer.usbank.com/product-suites/voyager-api-product-suite](https://developer.usbank.com/product-suites/voyager-api-product-suite)
+
+#### Tags
+
+- Fleet Management
+- Transportation
+- Banking
+- Finance
+- Corporate Payments
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/product-suites/voyager-api-product-suite)
 - [Transactions Docs](https://developer.usbank.com/products/voyager-transactions/v2)
 - [Vehicles Docs](https://developer.usbank.com/products/voyager-vehicles/v1)
+- [Accounts Docs](https://developer.usbank.com/products/voyager-accounts/v1)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank Freight Payment API
 
-Freight audit and payment processing for transportation companies.
+The Freight Payment API suite provides freight audit and payment processing capabilities, enabling freight shippers to submit and receive transaction data through a single API and manage freight payment users.
 
-**Human URL:** [https://developer.usbank.com/product-suites/freight-payment-api-product-suite](https://developer.usbank.com/product-suites/freight-payment-api-product-suite)
+- **Human URL:** [https://developer.usbank.com/product-suites/freight-payment-api-product-suite](https://developer.usbank.com/product-suites/freight-payment-api-product-suite)
+
+#### Tags
+
+- Freight Payment
+- Transportation
+- Banking
+- Finance
+- Supply Chain
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/product-suites/freight-payment-api-product-suite)
+- [Transactions Docs](https://developer.usbank.com/products/freight-payment-transactions/v1)
+- [User Management Docs](https://developer.usbank.com/products/freight-payment-user-management/v1)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank Instant Payments API
 
-Instant payment origination supporting FedNow and RTP rails.
+The Instant Payments API enables instant payment origination supporting FedNow and RTP payment rails for real-time settlement.
 
-**Human URL:** [https://developer.usbank.com/products/instant-payments/v2](https://developer.usbank.com/products/instant-payments/v2)
+- **Human URL:** [https://developer.usbank.com/products/instant-payments/v2](https://developer.usbank.com/products/instant-payments/v2)
+
+#### Tags
+
+- Payments
+- Instant Payments
+- Banking
+- Finance
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/products/instant-payments/v2)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### US Bank Holidays API
 
-U.S. Bank processing and Federal Reserve banking holiday information.
+The Bank Holidays API provides information about U.S. Bank processing holidays and Federal Reserve banking holidays, useful for payment scheduling and clearing house availability calculations.
 
-**Human URL:** [https://developer.usbank.com/products/bank-holidays/v1](https://developer.usbank.com/products/bank-holidays/v1)
+- **Human URL:** [https://developer.usbank.com/products/bank-holidays/v1](https://developer.usbank.com/products/bank-holidays/v1)
+
+#### Tags
+
+- Banking
+- Holidays
+- Reference Data
+- Finance
 
 #### Properties
 
 - [Documentation](https://developer.usbank.com/products/bank-holidays/v1)
+- [Postman Collection](collections/us-bank-corporate-account-information.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-corporate-account-information.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-positive-pay.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-positive-pay.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-push-to-card.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-push-to-card.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/us-bank-rtp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/us-bank-rtp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## Artifacts
+## Common Properties
 
-### OpenAPI
-
-- [Corporate Account Information API](openapi/us-bank-corporate-account-information-openapi.yml)
-- [RTP Real-Time Payments API](openapi/us-bank-rtp-openapi.yml)
-- [Positive Pay API](openapi/us-bank-positive-pay-openapi.yml)
-- [Push to Card API](openapi/us-bank-push-to-card-openapi.yml)
-
-### Spectral Rules
-
-- [US Bank API Rules](rules/us-bank-rules.yml)
-
-### Capabilities
-
-- [Treasury Management](capabilities/treasury-management.yaml)
-- [Payments](capabilities/payments.yaml)
-- [Shared: Corporate Account Information](capabilities/shared/corporate-account-information.yaml)
-- [Shared: RTP Payments](capabilities/shared/rtp-payments.yaml)
-
-### JSON Schema
-
-- [US Bank Account Schema](json-schema/us-bank-account-schema.json)
-- [US Bank Transaction Schema](json-schema/us-bank-transaction-schema.json)
-
-### JSON Structure
-
-- [US Bank Transaction Structure](json-structure/us-bank-transaction-structure.json)
-
-### JSON-LD
-
-- [US Bancorp Context](json-ld/us-bancorp-context.jsonld)
-
-### Examples
-
-- [RTP Initiate Credit Transfer](examples/us-bank-rtp-initiate-credit-transfer-example.json)
-- [Get Current Day Balances](examples/us-bank-corporate-account-information-get-current-day-balances-example.json)
-
-### Vocabulary
-
-- [US Bancorp Vocabulary](vocabulary/us-bancorp-vocabulary.yml)
+- [GitHub Organization](https://github.com/usbank)
+- [LinkedIn](https://www.linkedin.com/company/us-bank)
+- [Features](undefined)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** kin@apievangelist.com
