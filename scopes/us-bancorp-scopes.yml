@@ -1,0 +1,72 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/us-bank-corporate-account-information-openapi.yml, openapi/us-bank-positive-pay-openapi.yml,
+  openapi/us-bank-push-to-card-openapi.yml, openapi/us-bank-rtp-openapi.yml
+schemes:
+- name: OAuth2MFA
+  source: openapi/us-bank-corporate-account-information-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.usbank.com/oauth/authorize
+    tokenUrl: https://api.usbank.com/oauth/token
+  description: OAuth 2.0 with MFA using SinglePoint credentials
+- name: OAuth2MFA
+  source: openapi/us-bank-positive-pay-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.usbank.com/oauth/authorize
+    tokenUrl: https://api.usbank.com/oauth/token
+  description: OAuth 2.0 with MFA using SinglePoint credentials
+- name: OAuth2MFA
+  source: openapi/us-bank-push-to-card-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.usbank.com/oauth/authorize
+    tokenUrl: https://api.usbank.com/oauth/token
+  description: OAuth 2.0 with MFA using SinglePoint credentials
+- name: OAuth2MFA
+  source: openapi/us-bank-rtp-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.usbank.com/oauth/authorize
+    tokenUrl: https://api.usbank.com/oauth/token
+  description: OAuth 2.0 with MFA using SinglePoint credentials
+scopes:
+- scope: account.read
+  description: Read account information
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/us-bank-corporate-account-information-openapi.yml
+- scope: payment.read
+  description: Read payment status
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/us-bank-push-to-card-openapi.yml
+  - openapi/us-bank-rtp-openapi.yml
+- scope: payment.write
+  description: Initiate card payments
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/us-bank-push-to-card-openapi.yml
+  - openapi/us-bank-rtp-openapi.yml
+- scope: positivepay.read
+  description: Read exception items
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/us-bank-positive-pay-openapi.yml
+- scope: positivepay.write
+  description: Submit decisions
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/us-bank-positive-pay-openapi.yml
+- scope: transaction.read
+  description: Read transaction data
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/us-bank-corporate-account-information-openapi.yml
