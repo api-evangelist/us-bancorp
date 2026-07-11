@@ -247,6 +247,8 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: DomainSecurity
+    url: security/us-bancorp-domain-security.yml
   - type: Authentication
     url: authentication/us-bancorp-authentication.yml
   - type: OAuthScopes

@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/us-bank-corporate-account-information-openapi.yml, openapi/us-bank-positive-pay-openapi.yml,
+  openapi/us-bank-push-to-card-openapi.yml, openapi/us-bank-rtp-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: OAuth2MFA
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.usbank.com/oauth/authorize
+    tokenUrl: https://api.usbank.com/oauth/token
+    scopes: 2
+  description: OAuth 2.0 with MFA using SinglePoint credentials
+  sources:
+  - openapi/us-bank-corporate-account-information-openapi.yml
+  - openapi/us-bank-positive-pay-openapi.yml
+  - openapi/us-bank-push-to-card-openapi.yml
+  - openapi/us-bank-rtp-openapi.yml
