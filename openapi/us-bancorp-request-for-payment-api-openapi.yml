@@ -1,0 +1,182 @@
+openapi: 3.0.3
+info:
+  title: US Bank Corporate Account Information Accounts Request for Payment API
+  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+  termsOfService: https://developer.usbank.com/terms
+servers:
+- url: https://api.usbank.com/v1
+  description: US Bank production API
+security:
+- OAuth2MFA: []
+tags:
+- name: Request for Payment
+paths:
+  /rtp/requests-for-payment:
+    post:
+      operationId: initiateRTPRequestForPayment
+      summary: Initiate RTP Request for Payment
+      description: Initiate an RTP Request for Payment (RFP) to receive money in a U.S. Bank account. Supports configurable reminders, partial payments, and future payment scheduling.
+      tags:
+      - Request for Payment
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Correlation-ID
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestForPaymentRequest'
+      responses:
+        '201':
+          description: Request for payment initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestForPaymentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rtp/requests-for-payment/{requestId}:
+    get:
+      operationId: getRTPRequestForPaymentStatus
+      summary: Get RTP Request for Payment Status
+      description: Retrieve the status and details of an RTP Request for Payment.
+      tags:
+      - Request for Payment
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        description: The unique identifier of the RFP
+        schema:
+          type: string
+      - name: Correlation-ID
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Accept
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: RFP status and details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestForPaymentResponse'
+        '404':
+          description: Request for payment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    RequestForPaymentResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: Unique identifier for the RFP
+        status:
+          type: string
+          enum:
+          - PENDING
+          - SENT
+          - ACCEPTED
+          - PAID
+          - DECLINED
+          - EXPIRED
+          description: RFP status
+        amount:
+          type: number
+          description: Requested amount
+        createdAt:
+          type: string
+          format: date-time
+          description: RFP creation timestamp
+      required:
+      - requestId
+      - status
+      - amount
+      - createdAt
+    RequestForPaymentRequest:
+      type: object
+      description: Request to initiate an RTP Request for Payment
+      properties:
+        creditorAccountNumber:
+          type: string
+          description: U.S. Bank account to receive payment
+        debtorName:
+          type: string
+          description: Name of the party being requested to pay
+        debtorAccountNumber:
+          type: string
+          description: Debtor's account number
+        debtorRoutingNumber:
+          type: string
+          description: Debtor's bank routing number
+        amount:
+          type: number
+          format: double
+          description: Requested payment amount
+        dueDate:
+          type: string
+          format: date
+          description: Payment due date
+        remittanceInfo:
+          type: string
+          description: Invoice or billing reference information
+        partialPaymentAllowed:
+          type: boolean
+          description: Whether partial payment is accepted
+          default: false
+      required:
+      - creditorAccountNumber
+      - debtorName
+      - amount
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            account.read: Read account information
+            transaction.read: Read transaction data

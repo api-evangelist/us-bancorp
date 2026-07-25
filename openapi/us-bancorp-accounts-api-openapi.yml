@@ -1,0 +1,130 @@
+openapi: 3.0.3
+info:
+  title: US Bank Corporate Account Information Accounts API
+  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+  termsOfService: https://developer.usbank.com/terms
+servers:
+- url: https://api.usbank.com/v1
+  description: US Bank production API
+security:
+- OAuth2MFA: []
+tags:
+- name: Accounts
+paths:
+  /accounts:
+    get:
+      operationId: listAccounts
+      summary: List Accounts
+      description: Get a list of deposit accounts for the authorized customer.
+      tags:
+      - Accounts
+      parameters:
+      - name: Correlation-ID
+        in: header
+        required: true
+        description: Unique identifier for request/response correlation
+        schema:
+          type: string
+          format: uuid
+      - name: Accept
+        in: header
+        required: true
+        description: Response media type
+        schema:
+          type: string
+          default: application/json
+      - name: On-Behalf-Of
+        in: header
+        required: false
+        description: The U.S. Bank customer ID if submitted by a service provider on behalf of the customer
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of deposit accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Account:
+      type: object
+      description: A U.S. Bank deposit account
+      properties:
+        accountNumber:
+          type: string
+          description: Account number (masked for security)
+        accountType:
+          type: string
+          enum:
+          - CHECKING
+          - SAVINGS
+          - MONEY_MARKET
+          - CD
+          description: Type of deposit account
+        accountName:
+          type: string
+          description: Account nickname or name
+        currency:
+          type: string
+          description: ISO 4217 currency code
+          default: USD
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - CLOSED
+          - FROZEN
+          description: Account status
+      required:
+      - accountNumber
+      - accountType
+      - status
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
+    AccountList:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            account.read: Read account information
+            transaction.read: Read transaction data

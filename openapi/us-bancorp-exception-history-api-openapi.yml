@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  title: US Bank Corporate Account Information Accounts Exception History API
+  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+  termsOfService: https://developer.usbank.com/terms
+servers:
+- url: https://api.usbank.com/v1
+  description: US Bank production API
+security:
+- OAuth2MFA: []
+tags:
+- name: Exception History
+paths:
+  /positive-pay/exceptions/history:
+    get:
+      operationId: getExceptionHistory
+      summary: Get Exception History
+      description: Retrieve history and details of previously processed Positive Pay exceptions.
+      tags:
+      - Exception History
+      parameters:
+      - name: accountNumber
+        in: query
+        required: false
+        description: Filter by account number
+        schema:
+          type: string
+      - name: fromDate
+        in: query
+        required: false
+        description: Start date for exception history
+        schema:
+          type: string
+          format: date
+      - name: toDate
+        in: query
+        required: false
+        description: End date for exception history
+        schema:
+          type: string
+          format: date
+      - name: Correlation-ID
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Accept
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Exception history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionHistoryList'
+components:
+  schemas:
+    ExceptionHistoryList:
+      type: object
+      properties:
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionHistoryItem'
+        totalCount:
+          type: integer
+    ExceptionHistoryItem:
+      type: object
+      properties:
+        exceptionId:
+          type: string
+        accountNumber:
+          type: string
+        checkNumber:
+          type: string
+        amount:
+          type: number
+        exceptionDate:
+          type: string
+          format: date
+        decision:
+          type: string
+          enum:
+          - PAY
+          - RETURN
+          - AUTO_PAY
+          - AUTO_RETURN
+        decisionDate:
+          type: string
+          format: date-time
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            account.read: Read account information
+            transaction.read: Read transaction data

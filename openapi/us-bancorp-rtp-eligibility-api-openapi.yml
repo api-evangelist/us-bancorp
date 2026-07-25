@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: US Bank Corporate Account Information Accounts RTP Eligibility API
+  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+  termsOfService: https://developer.usbank.com/terms
+servers:
+- url: https://api.usbank.com/v1
+  description: US Bank production API
+security:
+- OAuth2MFA: []
+tags:
+- name: RTP Eligibility
+paths:
+  /rtp/eligibility:
+    get:
+      operationId: getRTPEligibility
+      summary: Check RTP Eligibility
+      description: Check if the recipient's bank is part of the RTP Network. The routing number of the receiving bank is required to check RTP eligibility.
+      tags:
+      - RTP Eligibility
+      parameters:
+      - name: routingNumber
+        in: query
+        required: true
+        description: 9-digit routing number of the receiver's bank
+        schema:
+          type: string
+          pattern: ^\d{9}$
+      - name: Accept
+        in: header
+        required: true
+        schema:
+          type: string
+          default: application/json
+      - name: Accept-Encoding
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: Correlation-ID
+        in: header
+        required: true
+        description: Unique identifier for every request/response pair
+        schema:
+          type: string
+          format: uuid
+      - name: On-Behalf-Of
+        in: header
+        required: false
+        description: The U.S. Bank customer ID if submitted by a service provider
+        schema:
+          type: string
+      responses:
+        '200':
+          description: RTP eligibility information for the routing number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RTPEligibilityResponse'
+        '400':
+          description: Invalid routing number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    RTPEligibilityResponse:
+      type: object
+      description: RTP eligibility information for a routing number
+      properties:
+        routingNumber:
+          type: string
+          description: The queried routing number
+        eligible:
+          type: boolean
+          description: Whether the bank is RTP-eligible
+        bankName:
+          type: string
+          description: Name of the bank associated with the routing number
+      required:
+      - routingNumber
+      - eligible
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            account.read: Read account information
+            transaction.read: Read transaction data

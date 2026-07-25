@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: US Bank Corporate Account Information Accounts Credit Transfers API
+  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+  termsOfService: https://developer.usbank.com/terms
+servers:
+- url: https://api.usbank.com/v1
+  description: US Bank production API
+security:
+- OAuth2MFA: []
+tags:
+- name: Credit Transfers
+paths:
+  /rtp/credit-transfers:
+    post:
+      operationId: initiateRTPCreditTransfer
+      summary: Initiate RTP Credit Transfer
+      description: Initiate an RTP credit transfer transaction. The payer must be a U.S. Bank customer. Transactions are processed 24/7/365 and settle instantly. All transactions are irrevocable once submitted.
+      tags:
+      - Credit Transfers
+      parameters:
+      - name: Content-Type
+        in: header
+        required: true
+        schema:
+          type: string
+          default: application/json
+      - name: Correlation-ID
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditTransferRequest'
+      responses:
+        '201':
+          description: Credit transfer initiated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditTransferResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Unable to process payment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /rtp/credit-transfers/{transactionId}:
+    get:
+      operationId: getRTPCreditTransferStatus
+      summary: Get RTP Credit Transfer Status
+      description: Retrieve the status and details of an RTP credit transfer that was initiated or an incoming credit transfer.
+      tags:
+      - Credit Transfers
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        description: The unique identifier of the RTP credit transfer transaction
+        schema:
+          type: string
+      - name: Correlation-ID
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Accept
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Credit transfer status and details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditTransferResponse'
+        '404':
+          description: Transaction not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    CreditTransferResponse:
+      type: object
+      description: Credit transfer status and details
+      properties:
+        transactionId:
+          type: string
+          description: U.S. Bank transaction identifier
+        endToEndId:
+          type: string
+          description: End-to-end identifier
+        status:
+          type: string
+          enum:
+          - PENDING
+          - ACCEPTED
+          - COMPLETED
+          - REJECTED
+          - FAILED
+          description: Transaction status
+        amount:
+          type: number
+          format: double
+          description: Payment amount
+        createdAt:
+          type: string
+          format: date-time
+          description: Transaction creation timestamp
+        completedAt:
+          type: string
+          format: date-time
+          description: Settlement completion timestamp
+        statusMessage:
+          type: string
+          description: Additional status information
+      required:
+      - transactionId
+      - status
+      - amount
+      - createdAt
+    CreditTransferRequest:
+      type: object
+      description: Request to initiate an RTP credit transfer
+      properties:
+        payerAccountNumber:
+          type: string
+          description: U.S. Bank account number to debit
+        payeeAccountNumber:
+          type: string
+          description: Recipient's account number
+        payeeRoutingNumber:
+          type: string
+          description: Recipient's bank routing number
+        payeeName:
+          type: string
+          description: Recipient's name
+        amount:
+          type: number
+          format: double
+          description: Payment amount in USD
+        remittanceInfo:
+          type: string
+          description: Payment description or remittance information (max 140 characters)
+        endToEndId:
+          type: string
+          description: Unique end-to-end identifier for the payment (client-assigned)
+      required:
+      - payerAccountNumber
+      - payeeAccountNumber
+      - payeeRoutingNumber
+      - payeeName
+      - amount
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            account.read: Read account information
+            transaction.read: Read transaction data

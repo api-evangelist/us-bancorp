@@ -1,0 +1,192 @@
+openapi: 3.0.3
+info:
+  title: US Bank Corporate Account Information Accounts Transactions API
+  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+  termsOfService: https://developer.usbank.com/terms
+servers:
+- url: https://api.usbank.com/v1
+  description: US Bank production API
+security:
+- OAuth2MFA: []
+tags:
+- name: Transactions
+paths:
+  /accounts/{accountNumber}/current-day-transactions:
+    get:
+      operationId: getCurrentDayTransactions
+      summary: Get Current Day Transactions
+      description: Get transactions for a specific account for the current business day.
+      tags:
+      - Transactions
+      parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        description: The U.S. Bank account number
+        schema:
+          type: string
+      - name: Correlation-ID
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Accept
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: On-Behalf-Of
+        in: header
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Current day transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionList'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /accounts/{accountNumber}/transactions:
+    get:
+      operationId: getAccountTransactions
+      summary: Get Account Transactions by Date Range
+      description: Get transactions for a specific account for prior business days over a date range. Historical transactions available up to 60 days (or 12/24 months with extended retention).
+      tags:
+      - Transactions
+      parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        description: The U.S. Bank account number
+        schema:
+          type: string
+      - name: fromDate
+        in: query
+        required: true
+        description: Start date for transaction history (ISO 8601 date)
+        schema:
+          type: string
+          format: date
+      - name: toDate
+        in: query
+        required: true
+        description: End date for transaction history (ISO 8601 date)
+        schema:
+          type: string
+          format: date
+      - name: Correlation-ID
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: Accept
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Transaction history for date range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    TransactionList:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        totalCount:
+          type: integer
+          description: Total number of transactions
+    Transaction:
+      type: object
+      description: An account transaction
+      properties:
+        transactionId:
+          type: string
+          description: Unique transaction identifier
+        accountNumber:
+          type: string
+          description: Account number
+        amount:
+          type: number
+          format: double
+          description: Transaction amount (positive for credits, negative for debits)
+        currency:
+          type: string
+          description: ISO 4217 currency code
+        transactionDate:
+          type: string
+          format: date
+          description: Date the transaction was processed
+        valueDate:
+          type: string
+          format: date
+          description: Value date (when funds are credited/debited)
+        description:
+          type: string
+          description: Transaction description or memo
+        transactionType:
+          type: string
+          description: Transaction type code
+        referenceNumber:
+          type: string
+          description: Reference number for the transaction
+        bankReference:
+          type: string
+          description: U.S. Bank internal reference number
+      required:
+      - transactionId
+      - accountNumber
+      - amount
+      - transactionDate
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            account.read: Read account information
+            transaction.read: Read transaction data
