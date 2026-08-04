@@ -1,0 +1,30 @@
+{
+  "provider": "us-bancorp",
+  "sources": [
+    "us-bancorp-accounts-api-openapi.yml",
+    "us-bancorp-balances-api-openapi.yml",
+    "us-bancorp-credit-transfers-api-openapi.yml",
+    "us-bancorp-exception-history-api-openapi.yml",
+    "us-bancorp-exceptions-api-openapi.yml",
+    "us-bancorp-push-to-card-payments-api-openapi.yml",
+    "us-bancorp-request-for-payment-api-openapi.yml",
+    "us-bancorp-rtp-eligibility-api-openapi.yml",
+    "us-bancorp-transactions-api-openapi.yml"
+  ],
+  "outputs": [
+    "us-bancorp-accounts-api-openapi.yml",
+    "us-bancorp-balances-api-openapi.yml",
+    "us-bancorp-credit-transfers-api-openapi.yml",
+    "us-bancorp-exception-history-api-openapi.yml",
+    "us-bancorp-exceptions-api-openapi.yml",
+    "us-bancorp-push-to-card-payments-api-openapi.yml",
+    "us-bancorp-request-for-payment-api-openapi.yml",
+    "us-bancorp-rtp-eligibility-api-openapi.yml",
+    "us-bancorp-transactions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

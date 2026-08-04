@@ -1,0 +1,441 @@
+openapi: 3.0.3
+info:
+  title: US Bank Corporate Account Information API
+  description: >-
+    The Corporate Account Information API provides U.S. Bank corporate customers with
+    programmatic access to deposit account balances and transaction data. Retrieve
+    current-day and previous-day balances for up to 50 accounts, transaction history
+    up to 60 days (with optional 12 or 24-month retention), and account statements.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+  termsOfService: https://developer.usbank.com/terms
+servers:
+  - url: https://api.usbank.com/v1
+    description: US Bank production API
+
+security:
+  - OAuth2MFA: []
+
+paths:
+  /accounts:
+    get:
+      operationId: listAccounts
+      summary: List Accounts
+      description: Get a list of deposit accounts for the authorized customer.
+      tags:
+        - Accounts
+      parameters:
+        - name: Correlation-ID
+          in: header
+          required: true
+          description: Unique identifier for request/response correlation
+          schema:
+            type: string
+            format: uuid
+        - name: Accept
+          in: header
+          required: true
+          description: Response media type
+          schema:
+            type: string
+            default: application/json
+        - name: On-Behalf-Of
+          in: header
+          required: false
+          description: The U.S. Bank customer ID if submitted by a service provider on behalf of the customer
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of deposit accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountList'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /accounts/current-day-balances:
+    post:
+      operationId: getCurrentDayBalances
+      summary: Get Current Day Account Balances
+      description: >-
+        Get account balances for an array of accounts for the current business day.
+        Supports up to 50 accounts per request. Includes available balance, ledger balance,
+        and collected balances.
+      tags:
+        - Balances
+      parameters:
+        - name: Correlation-ID
+          in: header
+          required: true
+          description: Unique identifier for request/response correlation
+          schema:
+            type: string
+            format: uuid
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+            default: application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountsRequest'
+      responses:
+        '200':
+          description: Current day account balances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalancesResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /accounts/previous-day-balances:
+    post:
+      operationId: getPreviousDayBalances
+      summary: Get Previous Day Account Balances
+      description: >-
+        Get account balances for an array of accounts for the previous business day.
+        Supports up to 50 accounts per request.
+      tags:
+        - Balances
+      parameters:
+        - name: Correlation-ID
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountsRequest'
+      responses:
+        '200':
+          description: Previous day account balances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalancesResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /accounts/{accountNumber}/current-day-transactions:
+    get:
+      operationId: getCurrentDayTransactions
+      summary: Get Current Day Transactions
+      description: Get transactions for a specific account for the current business day.
+      tags:
+        - Transactions
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          description: The U.S. Bank account number
+          schema:
+            type: string
+        - name: Correlation-ID
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: On-Behalf-Of
+          in: header
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Current day transactions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionList'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /accounts/{accountNumber}/transactions:
+    get:
+      operationId: getAccountTransactions
+      summary: Get Account Transactions by Date Range
+      description: >-
+        Get transactions for a specific account for prior business days over a date range.
+        Historical transactions available up to 60 days (or 12/24 months with extended retention).
+      tags:
+        - Transactions
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          description: The U.S. Bank account number
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          required: true
+          description: Start date for transaction history (ISO 8601 date)
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          required: true
+          description: End date for transaction history (ISO 8601 date)
+          schema:
+            type: string
+            format: date
+        - name: Correlation-ID
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Transaction history for date range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionList'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            account.read: Read account information
+            transaction.read: Read transaction data
+
+  schemas:
+    AccountList:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+
+    Account:
+      type: object
+      description: A U.S. Bank deposit account
+      properties:
+        accountNumber:
+          type: string
+          description: Account number (masked for security)
+        accountType:
+          type: string
+          enum: [CHECKING, SAVINGS, MONEY_MARKET, CD]
+          description: Type of deposit account
+        accountName:
+          type: string
+          description: Account nickname or name
+        currency:
+          type: string
+          description: ISO 4217 currency code
+          default: USD
+        status:
+          type: string
+          enum: [ACTIVE, CLOSED, FROZEN]
+          description: Account status
+      required:
+        - accountNumber
+        - accountType
+        - status
+
+    AccountsRequest:
+      type: object
+      description: Request body for batch account balance queries
+      properties:
+        accountNumbers:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+          description: List of account numbers to query (max 50)
+      required:
+        - accountNumbers
+
+    Balance:
+      type: object
+      description: Account balance information
+      properties:
+        accountNumber:
+          type: string
+          description: Account number
+        availableBalance:
+          type: number
+          format: double
+          description: Available balance (funds available for withdrawal)
+        ledgerBalance:
+          type: number
+          format: double
+          description: Ledger balance (book balance)
+        collectedBalance:
+          type: number
+          format: double
+          description: Collected balance (excluding float)
+        currency:
+          type: string
+          description: ISO 4217 currency code
+        balanceDate:
+          type: string
+          format: date
+          description: Date of balance information
+      required:
+        - accountNumber
+        - availableBalance
+        - ledgerBalance
+        - balanceDate
+
+    BalancesResponse:
+      type: object
+      properties:
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
+
+    Transaction:
+      type: object
+      description: An account transaction
+      properties:
+        transactionId:
+          type: string
+          description: Unique transaction identifier
+        accountNumber:
+          type: string
+          description: Account number
+        amount:
+          type: number
+          format: double
+          description: Transaction amount (positive for credits, negative for debits)
+        currency:
+          type: string
+          description: ISO 4217 currency code
+        transactionDate:
+          type: string
+          format: date
+          description: Date the transaction was processed
+        valueDate:
+          type: string
+          format: date
+          description: Value date (when funds are credited/debited)
+        description:
+          type: string
+          description: Transaction description or memo
+        transactionType:
+          type: string
+          description: Transaction type code
+        referenceNumber:
+          type: string
+          description: Reference number for the transaction
+        bankReference:
+          type: string
+          description: U.S. Bank internal reference number
+      required:
+        - transactionId
+        - accountNumber
+        - amount
+        - transactionDate
+
+    TransactionList:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        totalCount:
+          type: integer
+          description: Total number of transactions
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request

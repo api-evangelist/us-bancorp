@@ -1,0 +1,322 @@
+openapi: 3.0.3
+info:
+  title: US Bank Positive Pay API
+  description: >-
+    The Positive Pay API helps detect check fraud by electronically matching checks against
+    issued items. Retrieve exception items (mismatched checks), submit pay/return decisions,
+    and access exception history. Exceptions are available 9am-3pm local processing time
+    with decisions due by 3pm.
+  version: 1.0.0
+  contact:
+    name: US Bank API Onboarding Team
+    url: https://developer.usbank.com/contact
+    email: apionboarding@usbank.com
+servers:
+  - url: https://api.usbank.com/v1
+    description: US Bank production API
+
+security:
+  - OAuth2MFA: []
+
+paths:
+  /positive-pay/exceptions:
+    get:
+      operationId: getPositivePayExceptions
+      summary: Get Positive Pay Exceptions
+      description: >-
+        Retrieve Positive Pay and same-day Positive Pay exception items for the current
+        processing day. Available from 9am to 3pm local processing time.
+      tags:
+        - Exceptions
+      parameters:
+        - name: accountNumber
+          in: query
+          required: false
+          description: Filter exceptions by account number
+          schema:
+            type: string
+        - name: exceptionDate
+          in: query
+          required: false
+          description: Exception processing date (ISO 8601)
+          schema:
+            type: string
+            format: date
+        - name: Correlation-ID
+          in: header
+          required: true
+          description: Unique identifier for request/response correlation
+          schema:
+            type: string
+            format: uuid
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of Positive Pay exception items
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionList'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /positive-pay/exceptions/{exceptionId}/decision:
+    post:
+      operationId: submitExceptionDecision
+      summary: Submit Exception Decision
+      description: >-
+        Submit a pay or return decision for a Positive Pay exception item.
+        Decisions must be submitted by 3pm local processing time.
+      tags:
+        - Exceptions
+      parameters:
+        - name: exceptionId
+          in: path
+          required: true
+          description: Unique identifier for the exception item
+          schema:
+            type: string
+        - name: Correlation-ID
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Content-Type
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionRequest'
+      responses:
+        '200':
+          description: Decision submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '410':
+          description: Decision window has passed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /positive-pay/exceptions/history:
+    get:
+      operationId: getExceptionHistory
+      summary: Get Exception History
+      description: Retrieve history and details of previously processed Positive Pay exceptions.
+      tags:
+        - Exception History
+      parameters:
+        - name: accountNumber
+          in: query
+          required: false
+          description: Filter by account number
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          required: false
+          description: Start date for exception history
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          required: false
+          description: End date for exception history
+          schema:
+            type: string
+            format: date
+        - name: Correlation-ID
+          in: header
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Accept
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Exception history
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionHistoryList'
+
+components:
+  securitySchemes:
+    OAuth2MFA:
+      type: oauth2
+      description: OAuth 2.0 with MFA using SinglePoint credentials
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.usbank.com/oauth/authorize
+          tokenUrl: https://api.usbank.com/oauth/token
+          scopes:
+            positivepay.read: Read exception items
+            positivepay.write: Submit decisions
+
+  schemas:
+    ExceptionItem:
+      type: object
+      description: A Positive Pay exception item (check that did not match the issue file)
+      properties:
+        exceptionId:
+          type: string
+          description: Unique exception identifier
+        accountNumber:
+          type: string
+          description: Account number the check was presented against
+        checkNumber:
+          type: string
+          description: Check number
+        amount:
+          type: number
+          format: double
+          description: Check amount
+        issueAmount:
+          type: number
+          format: double
+          description: Amount from the issue file (if found)
+        presentedDate:
+          type: string
+          format: date
+          description: Date the check was presented for payment
+        issuedDate:
+          type: string
+          format: date
+          description: Date the check was issued (from issue file)
+        payee:
+          type: string
+          description: Payee name on the check
+        issuedPayee:
+          type: string
+          description: Payee from the issue file
+        exceptionReason:
+          type: string
+          enum: [NOT_ISSUED, AMOUNT_MISMATCH, ALREADY_PAID, STALE_DATED, VOID]
+          description: Reason for the exception
+        decisionRequired:
+          type: boolean
+          description: Whether a decision must be submitted
+        decisionDeadline:
+          type: string
+          format: date-time
+          description: Deadline for submitting pay/return decision
+      required:
+        - exceptionId
+        - accountNumber
+        - checkNumber
+        - amount
+        - presentedDate
+        - exceptionReason
+
+    ExceptionList:
+      type: object
+      properties:
+        exceptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionItem'
+        totalCount:
+          type: integer
+        processingDate:
+          type: string
+          format: date
+
+    DecisionRequest:
+      type: object
+      properties:
+        decision:
+          type: string
+          enum: [PAY, RETURN]
+          description: Pay or return the exception item
+        returnReason:
+          type: string
+          description: Reason for return (required if decision is RETURN)
+        notes:
+          type: string
+          description: Optional notes
+      required:
+        - decision
+
+    DecisionResponse:
+      type: object
+      properties:
+        exceptionId:
+          type: string
+        decision:
+          type: string
+          enum: [PAY, RETURN]
+        submittedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [ACCEPTED, PENDING, REJECTED]
+
+    ExceptionHistoryItem:
+      type: object
+      properties:
+        exceptionId:
+          type: string
+        accountNumber:
+          type: string
+        checkNumber:
+          type: string
+        amount:
+          type: number
+        exceptionDate:
+          type: string
+          format: date
+        decision:
+          type: string
+          enum: [PAY, RETURN, AUTO_PAY, AUTO_RETURN]
+        decisionDate:
+          type: string
+          format: date-time
+
+    ExceptionHistoryList:
+      type: object
+      properties:
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionHistoryItem'
+        totalCount:
+          type: integer
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        correlationId:
+          type: string
