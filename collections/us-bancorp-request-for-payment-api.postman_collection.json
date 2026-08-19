@@ -1,0 +1,417 @@
+{
+  "item": [
+    {
+      "id": "347ace40-5d3a-4fb5-885b-f1655c2fc56b",
+      "name": "Request for Payment",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b6276651-c8c9-4ac3-847b-a6d97df7c500",
+          "name": "Initiate RTP Request for Payment",
+          "request": {
+            "name": "Initiate RTP Request for Payment",
+            "description": {
+              "content": "Initiate an RTP Request for Payment (RFP) to receive money in a U.S. Bank account. Supports configurable reminders, partial payments, and future payment scheduling.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rtp",
+                "requests-for-payment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Correlation-ID",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"creditorAccountNumber\": \"<string>\",\n  \"debtorName\": \"<string>\",\n  \"amount\": \"<double>\",\n  \"debtorAccountNumber\": \"<string>\",\n  \"debtorRoutingNumber\": \"<string>\",\n  \"dueDate\": \"<date>\",\n  \"remittanceInfo\": \"<string>\",\n  \"partialPaymentAllowed\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c5852724-64a4-488c-83c6-ebc042778158",
+              "name": "Request for payment initiated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "requests-for-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"creditorAccountNumber\": \"<string>\",\n  \"debtorName\": \"<string>\",\n  \"amount\": \"<double>\",\n  \"debtorAccountNumber\": \"<string>\",\n  \"debtorRoutingNumber\": \"<string>\",\n  \"dueDate\": \"<date>\",\n  \"remittanceInfo\": \"<string>\",\n  \"partialPaymentAllowed\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"status\": \"PAID\",\n  \"amount\": 96.43141688001067,\n  \"createdAt\": \"2019-08-22T04:03:28.110Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9bf96895-56dc-4fb6-99a3-8f63cc35280d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "requests-for-payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"creditorAccountNumber\": \"<string>\",\n  \"debtorName\": \"<string>\",\n  \"amount\": \"<double>\",\n  \"debtorAccountNumber\": \"<string>\",\n  \"debtorRoutingNumber\": \"<string>\",\n  \"dueDate\": \"<date>\",\n  \"remittanceInfo\": \"<string>\",\n  \"partialPaymentAllowed\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0420b859-b97c-4af6-ac68-87de12ca5feb",
+          "name": "Get RTP Request for Payment Status",
+          "request": {
+            "name": "Get RTP Request for Payment Status",
+            "description": {
+              "content": "Retrieve the status and details of an RTP Request for Payment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rtp",
+                "requests-for-payment",
+                ":requestId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "requestId",
+                  "description": "(Required) The unique identifier of the RFP"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Correlation-ID",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "38caba52-c8d7-474f-87ac-892e39bcac13",
+              "name": "RFP status and details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "requests-for-payment",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The unique identifier of the RFP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"status\": \"PAID\",\n  \"amount\": 96.43141688001067,\n  \"createdAt\": \"2019-08-22T04:03:28.110Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "11caa3d7-632c-48a5-84d3-2160449685d5",
+              "name": "Request for payment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "requests-for-payment",
+                    ":requestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "requestId",
+                      "description": "(Required) The unique identifier of the RFP"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.usbank.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "account.read transaction.read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.usbank.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.usbank.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8298a763-20f1-45a1-b1ed-f27037d5adf4",
+    "name": "US Bank Corporate Account Information Accounts Request for Payment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.\n\nContact Support:\n Name: US Bank API Onboarding Team\n Email: apionboarding@usbank.com",
+      "type": "text/plain"
+    }
+  }
+}

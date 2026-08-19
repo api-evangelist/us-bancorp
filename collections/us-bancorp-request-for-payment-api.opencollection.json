@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "US Bank Corporate Account Information Accounts Request for Payment API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.usbank.com/oauth/authorize",
+      "accessTokenUrl": "https://api.usbank.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Request for Payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initiate RTP Request for Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.usbank.com/v1/rtp/requests-for-payment",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate an RTP Request for Payment (RFP) to receive money in a U.S. Bank account. Supports configurable reminders, partial payments, and future payment scheduling."
+        },
+        {
+          "info": {
+            "name": "Get RTP Request for Payment Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/rtp/requests-for-payment/:requestId",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "requestId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the RFP"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and details of an RTP Request for Payment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

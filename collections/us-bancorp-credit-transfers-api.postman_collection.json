@@ -1,0 +1,481 @@
+{
+  "item": [
+    {
+      "id": "280922ce-6e36-431d-801b-a2b213bf7848",
+      "name": "Credit Transfers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "227889ff-fe5b-4703-8ccc-5e98a670c3ff",
+          "name": "Initiate RTP Credit Transfer",
+          "request": {
+            "name": "Initiate RTP Credit Transfer",
+            "description": {
+              "content": "Initiate an RTP credit transfer transaction. The payer must be a U.S. Bank customer. Transactions are processed 24/7/365 and settle instantly. All transactions are irrevocable once submitted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rtp",
+                "credit-transfers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Correlation-ID",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"payerAccountNumber\": \"<string>\",\n  \"payeeAccountNumber\": \"<string>\",\n  \"payeeRoutingNumber\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"amount\": \"<double>\",\n  \"remittanceInfo\": \"<string>\",\n  \"endToEndId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9635edad-6e87-4543-a5c9-10fe1ac5771d",
+              "name": "Credit transfer initiated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "credit-transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payerAccountNumber\": \"<string>\",\n  \"payeeAccountNumber\": \"<string>\",\n  \"payeeRoutingNumber\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"amount\": \"<double>\",\n  \"remittanceInfo\": \"<string>\",\n  \"endToEndId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactionId\": \"string\",\n  \"status\": \"FAILED\",\n  \"amount\": 7901.1557096065435,\n  \"createdAt\": \"1955-01-31T00:28:15.671Z\",\n  \"endToEndId\": \"string\",\n  \"completedAt\": \"2012-05-08T15:18:36.913Z\",\n  \"statusMessage\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07528c7c-2e74-4fce-83dc-8d8504d34b0d",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "credit-transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payerAccountNumber\": \"<string>\",\n  \"payeeAccountNumber\": \"<string>\",\n  \"payeeRoutingNumber\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"amount\": \"<double>\",\n  \"remittanceInfo\": \"<string>\",\n  \"endToEndId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5bf1e32-2597-4acf-9b60-b566920739e3",
+              "name": "Unable to process payment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "credit-transfers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"payerAccountNumber\": \"<string>\",\n  \"payeeAccountNumber\": \"<string>\",\n  \"payeeRoutingNumber\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"amount\": \"<double>\",\n  \"remittanceInfo\": \"<string>\",\n  \"endToEndId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b24c329-ec69-42ef-99d3-a46419153a7b",
+          "name": "Get RTP Credit Transfer Status",
+          "request": {
+            "name": "Get RTP Credit Transfer Status",
+            "description": {
+              "content": "Retrieve the status and details of an RTP credit transfer that was initiated or an incoming credit transfer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rtp",
+                "credit-transfers",
+                ":transactionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionId",
+                  "description": "(Required) The unique identifier of the RTP credit transfer transaction"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Correlation-ID",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0fae5e7e-3e0c-4048-9fd7-75509bfb4e91",
+              "name": "Credit transfer status and details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "credit-transfers",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the RTP credit transfer transaction"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactionId\": \"string\",\n  \"status\": \"FAILED\",\n  \"amount\": 7901.1557096065435,\n  \"createdAt\": \"1955-01-31T00:28:15.671Z\",\n  \"endToEndId\": \"string\",\n  \"completedAt\": \"2012-05-08T15:18:36.913Z\",\n  \"statusMessage\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fd56b54-3fef-42d8-a62a-7656b553e896",
+              "name": "Transaction not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rtp",
+                    "credit-transfers",
+                    ":transactionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionId",
+                      "description": "(Required) The unique identifier of the RTP credit transfer transaction"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.usbank.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "account.read transaction.read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.usbank.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.usbank.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6d7983a1-ae01-4e86-a1c3-98c794a195e6",
+    "name": "US Bank Corporate Account Information Accounts Credit Transfers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.\n\nContact Support:\n Name: US Bank API Onboarding Team\n Email: apionboarding@usbank.com",
+      "type": "text/plain"
+    }
+  }
+}

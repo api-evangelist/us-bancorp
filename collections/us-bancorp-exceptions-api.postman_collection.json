@@ -1,0 +1,525 @@
+{
+  "item": [
+    {
+      "id": "904ad548-a6c2-4bbf-9231-df8d05ee61d7",
+      "name": "Exceptions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fecb3498-ee7a-4715-9ea0-3f8acbcd1da3",
+          "name": "Get Positive Pay Exceptions",
+          "request": {
+            "name": "Get Positive Pay Exceptions",
+            "description": {
+              "content": "Retrieve Positive Pay and same-day Positive Pay exception items for the current processing day. Available from 9am to 3pm local processing time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "positive-pay",
+                "exceptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountNumber",
+                  "value": "<string>",
+                  "description": "Filter exceptions by account number"
+                },
+                {
+                  "disabled": false,
+                  "key": "exceptionDate",
+                  "value": "<date>",
+                  "description": "Exception processing date (ISO 8601)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Unique identifier for request/response correlation",
+                "key": "Correlation-ID",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e75aa745-65d4-4b51-8476-7b1b00b6efeb",
+              "name": "List of Positive Pay exception items",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "positive-pay",
+                    "exceptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exceptionDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Unique identifier for request/response correlation",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"exceptions\": [\n    {\n      \"exceptionId\": \"string\",\n      \"accountNumber\": \"string\",\n      \"checkNumber\": \"string\",\n      \"amount\": 7075.802841618163,\n      \"presentedDate\": \"2015-02-13\",\n      \"exceptionReason\": \"ALREADY_PAID\",\n      \"issueAmount\": 7244.25518931649,\n      \"issuedDate\": \"1966-02-13\",\n      \"payee\": \"string\",\n      \"issuedPayee\": \"string\",\n      \"decisionRequired\": false,\n      \"decisionDeadline\": \"1987-03-16T22:43:33.926Z\"\n    },\n    {\n      \"exceptionId\": \"string\",\n      \"accountNumber\": \"string\",\n      \"checkNumber\": \"string\",\n      \"amount\": 6143.484028051283,\n      \"presentedDate\": \"1975-01-27\",\n      \"exceptionReason\": \"STALE_DATED\",\n      \"issueAmount\": 8095.395365226414,\n      \"issuedDate\": \"2025-12-31\",\n      \"payee\": \"string\",\n      \"issuedPayee\": \"string\",\n      \"decisionRequired\": false,\n      \"decisionDeadline\": \"2006-02-21T10:15:45.989Z\"\n    }\n  ],\n  \"totalCount\": 2478,\n  \"processingDate\": \"2005-08-16\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d883846-b8b3-4d59-8d4f-925aaed73bcc",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "positive-pay",
+                    "exceptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exceptionDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Unique identifier for request/response correlation",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3fcdd81-78a4-41ac-b962-64a91a25f0b4",
+          "name": "Submit Exception Decision",
+          "request": {
+            "name": "Submit Exception Decision",
+            "description": {
+              "content": "Submit a pay or return decision for a Positive Pay exception item. Decisions must be submitted by 3pm local processing time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "positive-pay",
+                "exceptions",
+                ":exceptionId",
+                "decision"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "exceptionId",
+                  "description": "(Required) Unique identifier for the exception item"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Correlation-ID",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"decision\": \"<string>\",\n  \"returnReason\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "565bdbb6-e7ba-4a22-b97e-8622e886f448",
+              "name": "Decision submitted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "positive-pay",
+                    "exceptions",
+                    ":exceptionId",
+                    "decision"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exceptionId",
+                      "description": "(Required) Unique identifier for the exception item"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"decision\": \"<string>\",\n  \"returnReason\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"exceptionId\": \"string\",\n  \"decision\": \"PAY\",\n  \"submittedAt\": \"1996-09-26T21:43:50.274Z\",\n  \"status\": \"PENDING\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67055efd-60d1-4771-b43d-ed720db819d8",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "positive-pay",
+                    "exceptions",
+                    ":exceptionId",
+                    "decision"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exceptionId",
+                      "description": "(Required) Unique identifier for the exception item"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"decision\": \"<string>\",\n  \"returnReason\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e51cb7e-fb3f-4c91-9f70-a705d2f45469",
+              "name": "Decision window has passed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "positive-pay",
+                    "exceptions",
+                    ":exceptionId",
+                    "decision"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exceptionId",
+                      "description": "(Required) Unique identifier for the exception item"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"decision\": \"<string>\",\n  \"returnReason\": \"<string>\",\n  \"notes\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"correlationId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.usbank.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "account.read transaction.read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.usbank.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.usbank.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a3343bb2-da78-492d-9fa6-f0f1312128a4",
+    "name": "US Bank Corporate Account Information Accounts Exceptions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.\n\nContact Support:\n Name: US Bank API Onboarding Team\n Email: apionboarding@usbank.com",
+      "type": "text/plain"
+    }
+  }
+}

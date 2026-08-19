@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "US Bank Corporate Account Information Accounts Exceptions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.usbank.com/oauth/authorize",
+      "accessTokenUrl": "https://api.usbank.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Exceptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Positive Pay Exceptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/positive-pay/exceptions",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter exceptions by account number"
+              },
+              {
+                "name": "exceptionDate",
+                "value": "",
+                "type": "query",
+                "description": "Exception processing date (ISO 8601)"
+              }
+            ]
+          },
+          "docs": "Retrieve Positive Pay and same-day Positive Pay exception items for the current processing day. Available from 9am to 3pm local processing time."
+        },
+        {
+          "info": {
+            "name": "Submit Exception Decision",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.usbank.com/v1/positive-pay/exceptions/:exceptionId/decision",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "exceptionId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the exception item"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a pay or return decision for a Positive Pay exception item. Decisions must be submitted by 3pm local processing time."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

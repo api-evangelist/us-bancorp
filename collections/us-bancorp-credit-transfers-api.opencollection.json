@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "US Bank Corporate Account Information Accounts Credit Transfers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.usbank.com/oauth/authorize",
+      "accessTokenUrl": "https://api.usbank.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Credit Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Initiate RTP Credit Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.usbank.com/v1/rtp/credit-transfers",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              },
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate an RTP credit transfer transaction. The payer must be a U.S. Bank customer. Transactions are processed 24/7/365 and settle instantly. All transactions are irrevocable once submitted."
+        },
+        {
+          "info": {
+            "name": "Get RTP Credit Transfer Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/rtp/credit-transfers/:transactionId",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the RTP credit transfer transaction"
+              }
+            ]
+          },
+          "docs": "Retrieve the status and details of an RTP credit transfer that was initiated or an incoming credit transfer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

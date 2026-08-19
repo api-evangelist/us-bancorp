@@ -1,0 +1,185 @@
+{
+  "item": [
+    {
+      "id": "0f298601-8d5e-4a18-b08e-458d2d36d630",
+      "name": "Exception History",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fdbbd10b-ed90-4fe2-818e-f3830222c31a",
+          "name": "Get Exception History",
+          "request": {
+            "name": "Get Exception History",
+            "description": {
+              "content": "Retrieve history and details of previously processed Positive Pay exceptions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "positive-pay",
+                "exceptions",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountNumber",
+                  "value": "<string>",
+                  "description": "Filter by account number"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "Start date for exception history"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "End date for exception history"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) ",
+                "key": "Correlation-ID",
+                "value": "<uuid>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "38747ad8-6b24-43c7-80bc-d8bc07e55aea",
+              "name": "Exception history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "positive-pay",
+                    "exceptions",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountNumber",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Correlation-ID",
+                    "value": "<uuid>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) ",
+                    "key": "Accept",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"history\": [\n    {\n      \"exceptionId\": \"string\",\n      \"accountNumber\": \"string\",\n      \"checkNumber\": \"string\",\n      \"amount\": 634.5877665447907,\n      \"exceptionDate\": \"1962-01-24\",\n      \"decision\": \"PAY\",\n      \"decisionDate\": \"2001-05-18T04:10:34.244Z\"\n    },\n    {\n      \"exceptionId\": \"string\",\n      \"accountNumber\": \"string\",\n      \"checkNumber\": \"string\",\n      \"amount\": 7947.3887585554,\n      \"exceptionDate\": \"1950-12-04\",\n      \"decision\": \"AUTO_RETURN\",\n      \"decisionDate\": \"2011-08-04T11:35:44.236Z\"\n    }\n  ],\n  \"totalCount\": 4645\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.usbank.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "account.read transaction.read"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://api.usbank.com/oauth/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://api.usbank.com/oauth/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "55b14b2d-142f-4297-a86a-d8f6abddcb08",
+    "name": "US Bank Corporate Account Information Accounts Exception History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.\n\nContact Support:\n Name: US Bank API Onboarding Team\n Email: apionboarding@usbank.com",
+      "type": "text/plain"
+    }
+  }
+}

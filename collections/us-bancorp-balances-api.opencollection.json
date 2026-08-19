@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "US Bank Corporate Account Information Accounts Balances API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.usbank.com/oauth/authorize",
+      "accessTokenUrl": "https://api.usbank.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Balances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current Day Account Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.usbank.com/v1/accounts/current-day-balances",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get account balances for an array of accounts for the current business day. Supports up to 50 accounts per request. Includes available balance, ledger balance, and collected balances."
+        },
+        {
+          "info": {
+            "name": "Get Previous Day Account Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.usbank.com/v1/accounts/previous-day-balances",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get account balances for an array of accounts for the previous business day. Supports up to 50 accounts per request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

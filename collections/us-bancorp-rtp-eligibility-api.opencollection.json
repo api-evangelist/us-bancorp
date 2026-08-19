@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "US Bank Corporate Account Information Accounts RTP Eligibility API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.usbank.com/oauth/authorize",
+      "accessTokenUrl": "https://api.usbank.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "RTP Eligibility",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check RTP Eligibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/rtp/eligibility",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "Accept-Encoding",
+                "value": ""
+              },
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "On-Behalf-Of",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "routingNumber",
+                "value": "",
+                "type": "query",
+                "description": "9-digit routing number of the receiver's bank"
+              }
+            ]
+          },
+          "docs": "Check if the recipient's bank is part of the RTP Network. The routing number of the receiving bank is required to check RTP eligibility."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

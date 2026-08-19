@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "US Bank Corporate Account Information Accounts Exception History API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.usbank.com/oauth/authorize",
+      "accessTokenUrl": "https://api.usbank.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Exception History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Exception History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/positive-pay/exceptions/history",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "query",
+                "description": "Filter by account number"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for exception history"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for exception history"
+              }
+            ]
+          },
+          "docs": "Retrieve history and details of previously processed Positive Pay exceptions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

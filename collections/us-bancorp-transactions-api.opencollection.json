@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "US Bank Corporate Account Information Accounts Transactions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://api.usbank.com/oauth/authorize",
+      "accessTokenUrl": "https://api.usbank.com/oauth/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current Day Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/accounts/:accountNumber/current-day-transactions",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              },
+              {
+                "name": "On-Behalf-Of",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "The U.S. Bank account number"
+              }
+            ]
+          },
+          "docs": "Get transactions for a specific account for the current business day."
+        },
+        {
+          "info": {
+            "name": "Get Account Transactions by Date Range",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.usbank.com/v1/accounts/:accountNumber/transactions",
+            "headers": [
+              {
+                "name": "Correlation-ID",
+                "value": ""
+              },
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "The U.S. Bank account number"
+              },
+              {
+                "name": "fromDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for transaction history (ISO 8601 date)"
+              },
+              {
+                "name": "toDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for transaction history (ISO 8601 date)"
+              }
+            ]
+          },
+          "docs": "Get transactions for a specific account for prior business days over a date range. Historical transactions available up to 60 days (or 12/24 months with extended retention)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
