@@ -1,13 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: US Bank Corporate Account Information Accounts Push to Card Payments API
-  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  title: US Bank Push to Card Push to Card Payments API
+  description: The Push to Card API enables instant fund disbursements directly to Visa and Mastercard debit cards. Ideal for disbursements, refunds, and payouts up to $125,000 per transaction. Transactions are irrevocable and provide immediate access to funds for recipients.
   version: 1.0.0
   contact:
     name: US Bank API Onboarding Team
     url: https://developer.usbank.com/contact
     email: apionboarding@usbank.com
-  termsOfService: https://developer.usbank.com/terms
 servers:
 - url: https://api.usbank.com/v1
   description: US Bank production API
@@ -102,6 +101,41 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    PushToCardRequest:
+      type: object
+      description: Request to initiate a Push to Card payment
+      properties:
+        sourceAccountNumber:
+          type: string
+          description: U.S. Bank source account number to debit
+        recipientCardNumber:
+          type: string
+          description: Recipient's Visa or Mastercard debit card number (16 digits)
+        recipientName:
+          type: string
+          description: Name of the recipient cardholder
+        amount:
+          type: number
+          format: double
+          description: Payment amount in USD (max $125,000)
+          maximum: 125000
+          minimum: 0.01
+        currency:
+          type: string
+          description: ISO 4217 currency code
+          default: USD
+        description:
+          type: string
+          description: Payment description or memo (max 140 characters)
+          maxLength: 140
+        clientReferenceId:
+          type: string
+          description: Client-assigned reference identifier
+      required:
+      - sourceAccountNumber
+      - recipientCardNumber
+      - recipientName
+      - amount
     PushToCardResponse:
       type: object
       description: Push to Card payment status
@@ -143,41 +177,6 @@ components:
       - status
       - amount
       - initiatedAt
-    PushToCardRequest:
-      type: object
-      description: Request to initiate a Push to Card payment
-      properties:
-        sourceAccountNumber:
-          type: string
-          description: U.S. Bank source account number to debit
-        recipientCardNumber:
-          type: string
-          description: Recipient's Visa or Mastercard debit card number (16 digits)
-        recipientName:
-          type: string
-          description: Name of the recipient cardholder
-        amount:
-          type: number
-          format: double
-          description: Payment amount in USD (max $125,000)
-          maximum: 125000
-          minimum: 0.01
-        currency:
-          type: string
-          description: ISO 4217 currency code
-          default: USD
-        description:
-          type: string
-          description: Payment description or memo (max 140 characters)
-          maxLength: 140
-        clientReferenceId:
-          type: string
-          description: Client-assigned reference identifier
-      required:
-      - sourceAccountNumber
-      - recipientCardNumber
-      - recipientName
-      - amount
     Error:
       type: object
       properties:
@@ -196,5 +195,5 @@ components:
           authorizationUrl: https://api.usbank.com/oauth/authorize
           tokenUrl: https://api.usbank.com/oauth/token
           scopes:
-            account.read: Read account information
-            transaction.read: Read transaction data
+            payment.write: Initiate card payments
+            payment.read: Read payment status

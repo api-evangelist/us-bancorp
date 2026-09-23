@@ -1,30 +1,51 @@
 {
   "provider": "us-bancorp",
   "sources": [
-    "us-bancorp-accounts-api-openapi.yml",
-    "us-bancorp-balances-api-openapi.yml",
-    "us-bancorp-credit-transfers-api-openapi.yml",
-    "us-bancorp-exception-history-api-openapi.yml",
-    "us-bancorp-exceptions-api-openapi.yml",
-    "us-bancorp-push-to-card-payments-api-openapi.yml",
-    "us-bancorp-request-for-payment-api-openapi.yml",
-    "us-bancorp-rtp-eligibility-api-openapi.yml",
-    "us-bancorp-transactions-api-openapi.yml"
+    "_original/us-bank-corporate-account-information-openapi.yml",
+    "_original/us-bank-positive-pay-openapi.yml",
+    "_original/us-bank-push-to-card-openapi.yml",
+    "_original/us-bank-rtp-openapi.yml"
   ],
   "outputs": [
     "us-bancorp-accounts-api-openapi.yml",
     "us-bancorp-balances-api-openapi.yml",
-    "us-bancorp-credit-transfers-api-openapi.yml",
+    "us-bancorp-transactions-api-openapi.yml",
     "us-bancorp-exception-history-api-openapi.yml",
     "us-bancorp-exceptions-api-openapi.yml",
     "us-bancorp-push-to-card-payments-api-openapi.yml",
-    "us-bancorp-request-for-payment-api-openapi.yml",
+    "us-bancorp-credit-transfers-api-openapi.yml",
     "us-bancorp-rtp-eligibility-api-openapi.yml",
-    "us-bancorp-transactions-api-openapi.yml"
+    "us-bancorp-request-for-payment-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (4 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "us-bank-corporate-account-information-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "us-bank-corporate-account-information-openapi.yml: declared missing tag: Accounts",
+    "us-bank-corporate-account-information-openapi.yml: declared missing tag: Balances",
+    "us-bank-corporate-account-information-openapi.yml: declared missing tag: Transactions",
+    "us-bank-positive-pay-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "us-bank-positive-pay-openapi.yml: declared missing tag: Exception History",
+    "us-bank-positive-pay-openapi.yml: declared missing tag: Exceptions",
+    "us-bank-push-to-card-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "us-bank-push-to-card-openapi.yml: declared missing tag: Push to Card Payments",
+    "us-bank-rtp-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "us-bank-rtp-openapi.yml: declared missing tag: Credit Transfers",
+    "us-bank-rtp-openapi.yml: declared missing tag: RTP Eligibility",
+    "us-bank-rtp-openapi.yml: declared missing tag: Request for Payment",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "us-bancorp-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "us-bancorp-balances-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "us-bancorp-credit-transfers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "us-bancorp-exception-history-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "us-bancorp-exceptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "us-bancorp-push-to-card-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "us-bancorp-request-for-payment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "us-bancorp-rtp-eligibility-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "us-bancorp-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

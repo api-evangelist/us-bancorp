@@ -1,13 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: US Bank Corporate Account Information Accounts Exception History API
-  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  title: US Bank Positive Pay Exception History API
+  description: The Positive Pay API helps detect check fraud by electronically matching checks against issued items. Retrieve exception items (mismatched checks), submit pay/return decisions, and access exception history. Exceptions are available 9am-3pm local processing time with decisions due by 3pm.
   version: 1.0.0
   contact:
     name: US Bank API Onboarding Team
     url: https://developer.usbank.com/contact
     email: apionboarding@usbank.com
-  termsOfService: https://developer.usbank.com/terms
 servers:
 - url: https://api.usbank.com/v1
   description: US Bank production API
@@ -64,15 +63,6 @@ paths:
                 $ref: '#/components/schemas/ExceptionHistoryList'
 components:
   schemas:
-    ExceptionHistoryList:
-      type: object
-      properties:
-        history:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExceptionHistoryItem'
-        totalCount:
-          type: integer
     ExceptionHistoryItem:
       type: object
       properties:
@@ -97,6 +87,15 @@ components:
         decisionDate:
           type: string
           format: date-time
+    ExceptionHistoryList:
+      type: object
+      properties:
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionHistoryItem'
+        totalCount:
+          type: integer
   securitySchemes:
     OAuth2MFA:
       type: oauth2
@@ -106,5 +105,5 @@ components:
           authorizationUrl: https://api.usbank.com/oauth/authorize
           tokenUrl: https://api.usbank.com/oauth/token
           scopes:
-            account.read: Read account information
-            transaction.read: Read transaction data
+            positivepay.read: Read exception items
+            positivepay.write: Submit decisions

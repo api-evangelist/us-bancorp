@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: US Bank Corporate Account Information Accounts Credit Transfers API
-  description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
+  title: US Bank RTP Real-Time Payments Credit Transfers API
+  description: The RTP Real-Time Payments API enables 24/7/365 instant payment origination through The Clearing House RTP network. Supports credit transfer messages, request for payment (RFP), and RTP eligibility verification. All transactions settle instantly and are irrevocable.
   version: 1.0.0
   contact:
     name: US Bank API Onboarding Team
@@ -140,6 +140,18 @@ components:
       - status
       - amount
       - createdAt
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
     CreditTransferRequest:
       type: object
       description: Request to initiate an RTP credit transfer
@@ -172,18 +184,6 @@ components:
       - payeeRoutingNumber
       - payeeName
       - amount
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Error message
-        correlationId:
-          type: string
-          description: Correlation ID from the request
   securitySchemes:
     OAuth2MFA:
       type: oauth2
@@ -193,5 +193,5 @@ components:
           authorizationUrl: https://api.usbank.com/oauth/authorize
           tokenUrl: https://api.usbank.com/oauth/token
           scopes:
-            account.read: Read account information
-            transaction.read: Read transaction data
+            payment.write: Initiate payments
+            payment.read: Read payment status

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: US Bank Corporate Account Information Accounts Transactions API
+  title: US Bank Corporate Account Information Transactions API
   description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
   version: 1.0.0
   contact:
@@ -113,18 +113,18 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    TransactionList:
+    Error:
       type: object
       properties:
-        accountNumber:
+        code:
           type: string
-        transactions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Transaction'
-        totalCount:
-          type: integer
-          description: Total number of transactions
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
     Transaction:
       type: object
       description: An account transaction
@@ -167,18 +167,18 @@ components:
       - accountNumber
       - amount
       - transactionDate
-    Error:
+    TransactionList:
       type: object
       properties:
-        code:
+        accountNumber:
           type: string
-          description: Error code
-        message:
-          type: string
-          description: Error message
-        correlationId:
-          type: string
-          description: Correlation ID from the request
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+        totalCount:
+          type: integer
+          description: Total number of transactions
   securitySchemes:
     OAuth2MFA:
       type: oauth2

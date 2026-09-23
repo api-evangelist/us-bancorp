@@ -1,7 +1,9 @@
 ---
 title: 'US Bancorp''s AI Strategy: Analysis of Dominance in ...'
 url: https://www.klover.ai/us-bancorp-ai-strategy-analysis-of-dominance-in-banking-financial-services-ai/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"U.S. Bancorp" press release artificial intelligence'
 position: 2
 source: serpapi-google

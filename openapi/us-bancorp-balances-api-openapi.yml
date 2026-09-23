@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: US Bank Corporate Account Information Accounts Balances API
+  title: US Bank Corporate Account Information Balances API
   description: The Corporate Account Information API provides U.S. Bank corporate customers with programmatic access to deposit account balances and transaction data. Retrieve current-day and previous-day balances for up to 50 accounts, transaction history up to 60 days (with optional 12 or 24-month retention), and account statements.
   version: 1.0.0
   contact:
@@ -113,6 +113,37 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
+    BalancesResponse:
+      type: object
+      properties:
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
+    AccountsRequest:
+      type: object
+      description: Request body for batch account balance queries
+      properties:
+        accountNumbers:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+          description: List of account numbers to query (max 50)
+      required:
+      - accountNumbers
     Balance:
       type: object
       description: Account balance information
@@ -144,37 +175,6 @@ components:
       - availableBalance
       - ledgerBalance
       - balanceDate
-    BalancesResponse:
-      type: object
-      properties:
-        balances:
-          type: array
-          items:
-            $ref: '#/components/schemas/Balance'
-    AccountsRequest:
-      type: object
-      description: Request body for batch account balance queries
-      properties:
-        accountNumbers:
-          type: array
-          maxItems: 50
-          items:
-            type: string
-          description: List of account numbers to query (max 50)
-      required:
-      - accountNumbers
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Error message
-        correlationId:
-          type: string
-          description: Correlation ID from the request
   securitySchemes:
     OAuth2MFA:
       type: oauth2
