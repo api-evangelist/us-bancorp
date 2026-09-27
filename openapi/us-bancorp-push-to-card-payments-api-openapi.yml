@@ -101,6 +101,15 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        correlationId:
+          type: string
     PushToCardRequest:
       type: object
       description: Request to initiate a Push to Card payment
@@ -177,15 +186,6 @@ components:
       - status
       - amount
       - initiatedAt
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        correlationId:
-          type: string
   securitySchemes:
     OAuth2MFA:
       type: oauth2

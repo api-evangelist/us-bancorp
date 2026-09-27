@@ -113,6 +113,23 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    DecisionRequest:
+      type: object
+      properties:
+        decision:
+          type: string
+          enum:
+          - PAY
+          - RETURN
+          description: Pay or return the exception item
+        returnReason:
+          type: string
+          description: Reason for return (required if decision is RETURN)
+        notes:
+          type: string
+          description: Optional notes
+      required:
+      - decision
     ExceptionItem:
       type: object
       description: A Positive Pay exception item (check that did not match the issue file)
@@ -171,25 +188,6 @@ components:
       - amount
       - presentedDate
       - exceptionReason
-    DecisionResponse:
-      type: object
-      properties:
-        exceptionId:
-          type: string
-        decision:
-          type: string
-          enum:
-          - PAY
-          - RETURN
-        submittedAt:
-          type: string
-          format: date-time
-        status:
-          type: string
-          enum:
-          - ACCEPTED
-          - PENDING
-          - REJECTED
     Error:
       type: object
       properties:
@@ -211,23 +209,25 @@ components:
         processingDate:
           type: string
           format: date
-    DecisionRequest:
+    DecisionResponse:
       type: object
       properties:
+        exceptionId:
+          type: string
         decision:
           type: string
           enum:
           - PAY
           - RETURN
-          description: Pay or return the exception item
-        returnReason:
+        submittedAt:
           type: string
-          description: Reason for return (required if decision is RETURN)
-        notes:
+          format: date-time
+        status:
           type: string
-          description: Optional notes
-      required:
-      - decision
+          enum:
+          - ACCEPTED
+          - PENDING
+          - REJECTED
   securitySchemes:
     OAuth2MFA:
       type: oauth2

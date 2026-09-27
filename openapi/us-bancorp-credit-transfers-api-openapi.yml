@@ -101,6 +101,18 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
     CreditTransferResponse:
       type: object
       description: Credit transfer status and details
@@ -140,18 +152,6 @@ components:
       - status
       - amount
       - createdAt
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Error message
-        correlationId:
-          type: string
-          description: Correlation ID from the request
     CreditTransferRequest:
       type: object
       description: Request to initiate an RTP credit transfer
