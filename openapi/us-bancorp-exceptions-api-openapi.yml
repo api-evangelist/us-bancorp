@@ -188,6 +188,25 @@ components:
       - amount
       - presentedDate
       - exceptionReason
+    DecisionResponse:
+      type: object
+      properties:
+        exceptionId:
+          type: string
+        decision:
+          type: string
+          enum:
+          - PAY
+          - RETURN
+        submittedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - ACCEPTED
+          - PENDING
+          - REJECTED
     Error:
       type: object
       properties:
@@ -209,25 +228,6 @@ components:
         processingDate:
           type: string
           format: date
-    DecisionResponse:
-      type: object
-      properties:
-        exceptionId:
-          type: string
-        decision:
-          type: string
-          enum:
-          - PAY
-          - RETURN
-        submittedAt:
-          type: string
-          format: date-time
-        status:
-          type: string
-          enum:
-          - ACCEPTED
-          - PENDING
-          - REJECTED
   securitySchemes:
     OAuth2MFA:
       type: oauth2

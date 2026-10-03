@@ -113,6 +113,13 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    BalancesResponse:
+      type: object
+      properties:
+        balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Balance'
     Balance:
       type: object
       description: Account balance information
@@ -144,13 +151,6 @@ components:
       - availableBalance
       - ledgerBalance
       - balanceDate
-    BalancesResponse:
-      type: object
-      properties:
-        balances:
-          type: array
-          items:
-            $ref: '#/components/schemas/Balance'
     Error:
       type: object
       properties:
