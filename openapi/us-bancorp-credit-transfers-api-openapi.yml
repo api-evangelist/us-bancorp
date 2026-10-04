@@ -101,38 +101,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    CreditTransferRequest:
-      type: object
-      description: Request to initiate an RTP credit transfer
-      properties:
-        payerAccountNumber:
-          type: string
-          description: U.S. Bank account number to debit
-        payeeAccountNumber:
-          type: string
-          description: Recipient's account number
-        payeeRoutingNumber:
-          type: string
-          description: Recipient's bank routing number
-        payeeName:
-          type: string
-          description: Recipient's name
-        amount:
-          type: number
-          format: double
-          description: Payment amount in USD
-        remittanceInfo:
-          type: string
-          description: Payment description or remittance information (max 140 characters)
-        endToEndId:
-          type: string
-          description: Unique end-to-end identifier for the payment (client-assigned)
-      required:
-      - payerAccountNumber
-      - payeeAccountNumber
-      - payeeRoutingNumber
-      - payeeName
-      - amount
     CreditTransferResponse:
       type: object
       description: Credit transfer status and details
@@ -184,6 +152,38 @@ components:
         correlationId:
           type: string
           description: Correlation ID from the request
+    CreditTransferRequest:
+      type: object
+      description: Request to initiate an RTP credit transfer
+      properties:
+        payerAccountNumber:
+          type: string
+          description: U.S. Bank account number to debit
+        payeeAccountNumber:
+          type: string
+          description: Recipient's account number
+        payeeRoutingNumber:
+          type: string
+          description: Recipient's bank routing number
+        payeeName:
+          type: string
+          description: Recipient's name
+        amount:
+          type: number
+          format: double
+          description: Payment amount in USD
+        remittanceInfo:
+          type: string
+          description: Payment description or remittance information (max 140 characters)
+        endToEndId:
+          type: string
+          description: Unique end-to-end identifier for the payment (client-assigned)
+      required:
+      - payerAccountNumber
+      - payeeAccountNumber
+      - payeeRoutingNumber
+      - payeeName
+      - amount
   securitySchemes:
     OAuth2MFA:
       type: oauth2

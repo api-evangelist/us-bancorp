@@ -113,23 +113,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    DecisionRequest:
-      type: object
-      properties:
-        decision:
-          type: string
-          enum:
-          - PAY
-          - RETURN
-          description: Pay or return the exception item
-        returnReason:
-          type: string
-          description: Reason for return (required if decision is RETURN)
-        notes:
-          type: string
-          description: Optional notes
-      required:
-      - decision
     ExceptionItem:
       type: object
       description: A Positive Pay exception item (check that did not match the issue file)
@@ -188,6 +171,18 @@ components:
       - amount
       - presentedDate
       - exceptionReason
+    ExceptionList:
+      type: object
+      properties:
+        exceptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionItem'
+        totalCount:
+          type: integer
+        processingDate:
+          type: string
+          format: date
     DecisionResponse:
       type: object
       properties:
@@ -207,6 +202,23 @@ components:
           - ACCEPTED
           - PENDING
           - REJECTED
+    DecisionRequest:
+      type: object
+      properties:
+        decision:
+          type: string
+          enum:
+          - PAY
+          - RETURN
+          description: Pay or return the exception item
+        returnReason:
+          type: string
+          description: Reason for return (required if decision is RETURN)
+        notes:
+          type: string
+          description: Optional notes
+      required:
+      - decision
     Error:
       type: object
       properties:
@@ -216,18 +228,6 @@ components:
           type: string
         correlationId:
           type: string
-    ExceptionList:
-      type: object
-      properties:
-        exceptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExceptionItem'
-        totalCount:
-          type: integer
-        processingDate:
-          type: string
-          format: date
   securitySchemes:
     OAuth2MFA:
       type: oauth2

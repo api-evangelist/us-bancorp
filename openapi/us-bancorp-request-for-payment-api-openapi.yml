@@ -94,34 +94,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    RequestForPaymentResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: Unique identifier for the RFP
-        status:
-          type: string
-          enum:
-          - PENDING
-          - SENT
-          - ACCEPTED
-          - PAID
-          - DECLINED
-          - EXPIRED
-          description: RFP status
-        amount:
-          type: number
-          description: Requested amount
-        createdAt:
-          type: string
-          format: date-time
-          description: RFP creation timestamp
-      required:
-      - requestId
-      - status
-      - amount
-      - createdAt
     RequestForPaymentRequest:
       type: object
       description: Request to initiate an RTP Request for Payment
@@ -157,6 +129,34 @@ components:
       - creditorAccountNumber
       - debtorName
       - amount
+    RequestForPaymentResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: Unique identifier for the RFP
+        status:
+          type: string
+          enum:
+          - PENDING
+          - SENT
+          - ACCEPTED
+          - PAID
+          - DECLINED
+          - EXPIRED
+          description: RFP status
+        amount:
+          type: number
+          description: Requested amount
+        createdAt:
+          type: string
+          format: date-time
+          description: RFP creation timestamp
+      required:
+      - requestId
+      - status
+      - amount
+      - createdAt
     Error:
       type: object
       properties:

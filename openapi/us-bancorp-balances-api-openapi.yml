@@ -120,6 +120,30 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Balance'
+    AccountsRequest:
+      type: object
+      description: Request body for batch account balance queries
+      properties:
+        accountNumbers:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+          description: List of account numbers to query (max 50)
+      required:
+      - accountNumbers
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Error message
+        correlationId:
+          type: string
+          description: Correlation ID from the request
     Balance:
       type: object
       description: Account balance information
@@ -151,30 +175,6 @@ components:
       - availableBalance
       - ledgerBalance
       - balanceDate
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Error code
-        message:
-          type: string
-          description: Error message
-        correlationId:
-          type: string
-          description: Correlation ID from the request
-    AccountsRequest:
-      type: object
-      description: Request body for batch account balance queries
-      properties:
-        accountNumbers:
-          type: array
-          maxItems: 50
-          items:
-            type: string
-          description: List of account numbers to query (max 50)
-      required:
-      - accountNumbers
   securitySchemes:
     OAuth2MFA:
       type: oauth2

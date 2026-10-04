@@ -63,6 +63,15 @@ paths:
                 $ref: '#/components/schemas/ExceptionHistoryList'
 components:
   schemas:
+    ExceptionHistoryList:
+      type: object
+      properties:
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionHistoryItem'
+        totalCount:
+          type: integer
     ExceptionHistoryItem:
       type: object
       properties:
@@ -87,15 +96,6 @@ components:
         decisionDate:
           type: string
           format: date-time
-    ExceptionHistoryList:
-      type: object
-      properties:
-        history:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExceptionHistoryItem'
-        totalCount:
-          type: integer
   securitySchemes:
     OAuth2MFA:
       type: oauth2
