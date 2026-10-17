@@ -113,6 +113,63 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    DecisionRequest:
+      type: object
+      properties:
+        decision:
+          type: string
+          enum:
+          - PAY
+          - RETURN
+          description: Pay or return the exception item
+        returnReason:
+          type: string
+          description: Reason for return (required if decision is RETURN)
+        notes:
+          type: string
+          description: Optional notes
+      required:
+      - decision
+    DecisionResponse:
+      type: object
+      properties:
+        exceptionId:
+          type: string
+        decision:
+          type: string
+          enum:
+          - PAY
+          - RETURN
+        submittedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+          - ACCEPTED
+          - PENDING
+          - REJECTED
+    ExceptionList:
+      type: object
+      properties:
+        exceptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExceptionItem'
+        totalCount:
+          type: integer
+        processingDate:
+          type: string
+          format: date
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        correlationId:
+          type: string
     ExceptionItem:
       type: object
       description: A Positive Pay exception item (check that did not match the issue file)
@@ -171,63 +228,6 @@ components:
       - amount
       - presentedDate
       - exceptionReason
-    ExceptionList:
-      type: object
-      properties:
-        exceptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExceptionItem'
-        totalCount:
-          type: integer
-        processingDate:
-          type: string
-          format: date
-    DecisionResponse:
-      type: object
-      properties:
-        exceptionId:
-          type: string
-        decision:
-          type: string
-          enum:
-          - PAY
-          - RETURN
-        submittedAt:
-          type: string
-          format: date-time
-        status:
-          type: string
-          enum:
-          - ACCEPTED
-          - PENDING
-          - REJECTED
-    DecisionRequest:
-      type: object
-      properties:
-        decision:
-          type: string
-          enum:
-          - PAY
-          - RETURN
-          description: Pay or return the exception item
-        returnReason:
-          type: string
-          description: Reason for return (required if decision is RETURN)
-        notes:
-          type: string
-          description: Optional notes
-      required:
-      - decision
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        correlationId:
-          type: string
   securitySchemes:
     OAuth2MFA:
       type: oauth2

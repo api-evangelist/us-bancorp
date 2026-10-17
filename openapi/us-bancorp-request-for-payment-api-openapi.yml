@@ -94,41 +94,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    RequestForPaymentRequest:
-      type: object
-      description: Request to initiate an RTP Request for Payment
-      properties:
-        creditorAccountNumber:
-          type: string
-          description: U.S. Bank account to receive payment
-        debtorName:
-          type: string
-          description: Name of the party being requested to pay
-        debtorAccountNumber:
-          type: string
-          description: Debtor's account number
-        debtorRoutingNumber:
-          type: string
-          description: Debtor's bank routing number
-        amount:
-          type: number
-          format: double
-          description: Requested payment amount
-        dueDate:
-          type: string
-          format: date
-          description: Payment due date
-        remittanceInfo:
-          type: string
-          description: Invoice or billing reference information
-        partialPaymentAllowed:
-          type: boolean
-          description: Whether partial payment is accepted
-          default: false
-      required:
-      - creditorAccountNumber
-      - debtorName
-      - amount
     RequestForPaymentResponse:
       type: object
       properties:
@@ -169,6 +134,41 @@ components:
         correlationId:
           type: string
           description: Correlation ID from the request
+    RequestForPaymentRequest:
+      type: object
+      description: Request to initiate an RTP Request for Payment
+      properties:
+        creditorAccountNumber:
+          type: string
+          description: U.S. Bank account to receive payment
+        debtorName:
+          type: string
+          description: Name of the party being requested to pay
+        debtorAccountNumber:
+          type: string
+          description: Debtor's account number
+        debtorRoutingNumber:
+          type: string
+          description: Debtor's bank routing number
+        amount:
+          type: number
+          format: double
+          description: Requested payment amount
+        dueDate:
+          type: string
+          format: date
+          description: Payment due date
+        remittanceInfo:
+          type: string
+          description: Invoice or billing reference information
+        partialPaymentAllowed:
+          type: boolean
+          description: Whether partial payment is accepted
+          default: false
+      required:
+      - creditorAccountNumber
+      - debtorName
+      - amount
   securitySchemes:
     OAuth2MFA:
       type: oauth2
