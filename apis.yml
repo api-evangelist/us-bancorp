@@ -23,6 +23,12 @@ apis:
   tags:
   - Banking
   - Account Data
+  - Consumer Banking
+  - Finance
+  - Open Banking
+  tags_raw:
+  - Banking
+  - Account Data
   - Retail Banking
   - Finance
   - Open Banking
