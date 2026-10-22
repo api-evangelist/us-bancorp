@@ -60,3 +60,34 @@
     detected: '2026-10-19'
   status: not-a-workflow
   arazzo: null
+- slug: us-bancorp-fdic-bankfind-insured-institutions
+  label: FDIC BankFind insured institutions
+  partner_name: FDIC BankFind insured institutions
+  category: US FDIC-insured depository institution charter
+  type: register
+  channel: regulator-register
+  evidence: https://api.fdic.gov/banks/institutions?filters=ACTIVE:1&fields=NAME,WEBADDR,CERT,ASSET,STALP
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: FDIC BankFind insured institutions
+    spec_file: null
+    standard: null
+    role: insured-depository-institution
+    registrations:
+    - registered_name: U.S. Bank National Association
+      register_status: active
+      register_country: US
+      register_id: '6548'
+      matched_domain: usbank.com
+      matched_by: domain+local-verified
+      licences:
+      - FDIC-insured institution (CERT 6548)
+      evidence_url: https://banks.data.fdic.gov/bankfind-suite/bankfind/details/6548
+      state: OH
+    signal_note: 'participation only: a federal deposit-insurance charter on a regulator register; no API conformance
+      is published by this register'
+    detected_by: sweep-us-bank-credit-union-registers.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
